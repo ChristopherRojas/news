@@ -21,50 +21,50 @@ public final class News {
      * Unique id
      */
 
-    private Long id;
+    private final Long id;
     /**
      * The Title.
      * Restrictions:not null, size > 2
      */
 
-    private String title;
+    private final String title;
 
     /**
      * The Source.
      *
      */
-    private String source;
+    private final String source;
 
     /**
      * The Author.
      *
      */
-    private String author;
+    private final  String author;
     /**
      * The Url.
      *
      */
-    private String url;
+    private final String url;
     /**
      * The Url of Image.
      *
      */
-    private String utlImage;
+    private final String utlImage;
     /**
      * The Description.
      *
      */
-    private String description;
+    private final String description;
     /**
      * The Content.
      *
      */
-    private String content;
+    private final String content;
     /**
      * The Date of publish.
      *
      */
-    private ZonedDateTime publishedAt;
+    private final ZonedDateTime publishedAt;
 
     /**
      * The Constructor
@@ -96,35 +96,51 @@ public final class News {
     public Long getId() {
         return id;
     }
-
+    /**
+     * @return the title.
+     */
     public String getTitle() {
         return title;
     }
-
+    /**
+     * @return the sources.
+     */
     public String getSource() {
         return source;
     }
-
+    /**
+     * @return the author.
+     */
     public String getAuthor() {
         return author;
     }
-
+    /**
+     * @return the url.
+     */
     public String getUrl() {
         return url;
     }
-
+    /**
+     * @return the image.
+     */
     public String getUtlImage() {
         return utlImage;
     }
-
+    /**
+     * @return the description.
+     */
     public String getDescription() {
         return description;
     }
-
+    /**
+     * @return the content.
+     */
     public String getContent() {
         return content;
     }
-
+    /**
+     * @return the date of publish.
+     */
     public ZonedDateTime getPublishedAt() {
         return publishedAt;
     }
