@@ -22,12 +22,13 @@ import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
+
 /**
  * The faker implementation of {@link Contracts}.
+ *
  * @author chritopher Rojas-Garri.
  */
 
@@ -75,18 +76,18 @@ public class ContractsImplFaker implements Contracts {
      * @param size size of the list.
      * @return the List of News.
      */
-    @Override
-    public List<News> retrieveNews(Integer size) {
 
-        // Return all the data
+   // TODO : Default implementation
+    @Override
+    public List<News> retrieveNews(final Integer size) {
+
+        // Returns data compare size
         if (size > theNews.size()) {
-            return Collections.unmodifiableList(this.theNews);
+            return this.theNews;
         }
 
         // The last "size" elements.
-        return Collections.unmodifiableList(
-                theNews.subList(theNews.size() - size, theNews.size())
-        );
+        return this.theNews.subList(0,theNews.size());
     }
 
     /**
