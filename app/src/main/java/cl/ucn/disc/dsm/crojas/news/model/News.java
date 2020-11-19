@@ -79,6 +79,18 @@ public final class News {
      * @param publishedAt
      */
     public News(Long id, String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
+        //TODO : add validation
+
+        if(id == null && id.equals(id)){
+            System.out.println("Enter valid id ");
+        }
+        if(title == null && title.length()<2){
+            System.out.println("Enter valid title ");
+        }
+        if(publishedAt == null){
+            System.out.println("Enter published valid");
+        }
+
         this.id = id;
         this.title = title;
         this.source = source;
