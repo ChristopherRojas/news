@@ -49,7 +49,7 @@ public final class News {
      * The Url of Image.
      *
      */
-    private final String utlImage;
+    private final String urlImage;
     /**
      * The Description.
      *
@@ -73,18 +73,18 @@ public final class News {
      * @param source
      * @param author
      * @param url
-     * @param utlImage
+     * @param urlImage
      * @param description
      * @param content
      * @param publishedAt
      */
-    public News(Long id, String title, String source, String author, String url, String utlImage, String description, String content, ZonedDateTime publishedAt) {
+    public News(Long id, String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
         this.id = id;
         this.title = title;
         this.source = source;
         this.author = author;
         this.url = url;
-        this.utlImage = utlImage;
+        this.urlImage = urlImage;
         this.description = description;
         this.content = content;
         this.publishedAt = publishedAt;
@@ -123,8 +123,8 @@ public final class News {
     /**
      * @return the image.
      */
-    public String getUtlImage() {
-        return utlImage;
+    public String getUrlImage() {
+        return urlImage;
     }
     /**
      * @return the description.
