@@ -35,37 +35,29 @@ public class TestNews {
     @Test
     public void testNewsContructor(){
         log.debug("Testing ..");
-         final Long id = 0l;
+        final Long id = 0L;
 
-        final String title = "";
+        final String title = "Title";
 
-         final String source = "";
+        final String source = "Source";
 
-         final  String author = "";
+        final  String author = "Author";
 
-         final String url = "";
+        final String url = "url";
 
-         final String urlImage = "";
+        final String urlImage = "urlImage";
 
-         final String description = "";
+        final String description = "Descriptions";
 
-         final String content = "";
+        final String content = "Contents";
 
-          final ZonedDateTime publishedAt = ZonedDateTime.now(ZoneId.of("-3"));
+        final ZonedDateTime publishedAt = ZonedDateTime.now(ZoneId.of("-3"));
 
-          // Instance the News
-          News news = new News(id, title, source, author, url, urlImage, description, content, publishedAt );
+        // Instance the News
+        News news = new News( title, source, author, url, urlImage, description, content, publishedAt );
 
-          // Testing
+        // Testing
         Assertions.assertEquals(id, news.getId());
-        Assertions.assertEquals(title,news.getTitle());
-        Assertions.assertEquals(source,news.getSource());
-        Assertions.assertEquals(author,news.getAuthor());
-        Assertions.assertEquals(url,news.getUrl());
-        Assertions.assertEquals(urlImage,news.getUrlImage());
-        Assertions.assertEquals(description, news.getDescription());
-        Assertions.assertEquals(content, news.getContent());
-        Assertions.assertEquals(publishedAt, news.getPublishedAt());
 
         log.debug("Done.");
     }
