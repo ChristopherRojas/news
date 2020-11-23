@@ -17,12 +17,12 @@ import cl.ucn.disc.dsm.crojas.news.model.News;
  * @author Christopher Rojas-Garri
  */
 public interface Contracts {
+
     /**
      * Get the list of News.
      * @param size  size of the list.
      * @return the List of News.
      */
-
     List<News> retrieveNews(Integer size);
 
     /**
