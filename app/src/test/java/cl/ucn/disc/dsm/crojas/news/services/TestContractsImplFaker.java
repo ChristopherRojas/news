@@ -80,15 +80,14 @@ public class TestContractsImplFaker {
      */
     @Test
     public void testSaveNews() {
-
-        log.debug("Testing ..");
-
-        // The concrete implementation
-        Contracts contracts = new ContractsImplFaker();
-        // Create News and add the system
-        Faker faker = Faker.instance();
-        for (int i = 0; i < 5; i++) {
-            Long id = Integer.toUnsignedLong(i);
+         int tam =5;
+        log.debug("Testing the News..");
+          Contracts contracts = new ContractsImplFaker();
+        // the List of noticia
+          List<News> news = contracts.retrieveNews(tam);
+        // Add the system create the News
+          Faker faker = Faker.instance();
+            Long id = Integer.toUnsignedLong(tam);
             String title = faker.book().title();
             String source = faker.name().username();
             String author = faker.name().fullName();
@@ -97,20 +96,16 @@ public class TestContractsImplFaker {
             String description = faker.lorem().sentence();
             String content = faker.lorem().paragraph(3);
             ZonedDateTime publishedAt = org.threeten.bp.ZonedDateTime.now(ZoneId.of("-3"));
-
-            //Instance theNew
-            News theNew = new News(id, title, source, author, url, urlImage, description, content, publishedAt);
-
-            //save theNew into the contracts
-            contracts.saveNews(theNew);
-            //test if the New is not null
-            Assertions.assertNotNull(theNew);
-            //Test if the size
-            Assertions.assertEquals(6, contracts.retrieveNews(5 + 1).size(), "the size is not 6");
-        }
-
-        log.debug("Done.");
-
+            //Add The New
+            News newNew = new News( title, source, author, url, urlImage, description, content, publishedAt);
+            //save the New in the contracts
+            contracts.saveNews(newNew);
+          //Test get of list and check size +1
+          Assertions.assertEquals(6, contracts.retrieveNews(tam + 1).size(), "Error the size");
+          //The New is not null
+          Assertions.assertNotNull(newNew , "The News is null");
+        System.out.println("Name: " + faker.name().title());
+        log.debug("Done..");
     }
 
     /**
@@ -125,7 +120,6 @@ public class TestContractsImplFaker {
             //FIXME: remover
             System.out.println("Name: " + faker.name().fullName());
         }
-
 
     }
 }
