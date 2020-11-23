@@ -8,31 +8,37 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package cl.ucn.disc.dsm.crojas.news.services;
+package cl.ucn.disc.dsm.crojas.news.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import cl.ucn.disc.dsm.crojas.news.model.News;
 /**
- * @author chritopher Rojas-Garri.
+ * The Validations.
+ * @author Christopher Rojas-Garri
  */
+public class Validation {
 
-public class ContractsImpl implements Contracts {
     /**
-     * Get the list of News.
-     *
-     * @param size size of the list.
-     * @return the List of News.
+     * Check to size.
+     * @param message to throw in case of wrond size.
+     * @param minSize to check.
+     * @param value to check.
      */
-    @Override
-    public List<News> retrieveNews(Integer size) {
-
-        //The list of news
-        final List<News> news = new ArrayList<>();
-
-        // TODO: Add the faker news to the list.
-
-        return news;
+    public static void minSize(String value, int minSize, String message) {
+        //nullity
+        notNull(value,message);
+        if ( value.length()<minSize){
+            throw new IllegalArgumentException("Argument null or wrong size ->"+ message);
+        }
     }
+
+    /**
+     * Check Nullity.
+     * @param value to check.
+     * @param message in throw in case nullity.
+     */
+    public static void notNull(Object value , String message){
+            if (value== null){
+                throw new IllegalArgumentException("Argument null ->"+ message);
+            }
+    }
+
 }
