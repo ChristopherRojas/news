@@ -10,23 +10,27 @@
 
 package cl.ucn.disc.dsm.crojas.news.model;
 
+import net.openhft.hashing.LongHashFunction;
+
 import org.threeten.bp.ZonedDateTime;
+
+import cl.ucn.disc.dsm.crojas.news.utils.Validation;
 
 /**
  * The Domain model :News.
  * @author Christopher Rojas-Garri
  */
 public final class News {
+
     /**
      * Unique id
      */
-
     private final Long id;
+
     /**
      * The Title.
      * Restrictions:not null, size > 2
      */
-
     private final String title;
 
     /**
@@ -40,35 +44,40 @@ public final class News {
      *
      */
     private final  String author;
+
     /**
      * The Url.
      *
      */
     private final String url;
+
     /**
      * The Url of Image.
      *
      */
     private final String urlImage;
+
     /**
      * The Description.
      *
      */
     private final String description;
+
     /**
      * The Content.
      *
      */
     private final String content;
+
     /**
      * The Date of publish.
      *
      */
     private final ZonedDateTime publishedAt;
 
+
     /**
      * The Constructor
-     * @param id
      * @param title
      * @param source
      * @param author
@@ -78,27 +87,27 @@ public final class News {
      * @param content
      * @param publishedAt
      */
-    public News(Long id, String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
+    public News( String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
         //TODO : add validation
-
-        if(id == null && id.equals(id)){
-            System.out.println("Enter valid id ");
-        }
-        if(title == null && title.length()<2){
-            System.out.println("Enter valid title ");
-        }
-        if(publishedAt == null){
-            System.out.println("Enter published valid");
-        }
-
-        this.id = id;
+        //Validation of Title
+        Validation.minSize(title,2,"title");
         this.title = title;
+        //Validation of source
+        Validation.minSize(source,2,"source");
         this.source = source;
+        //Validation of author
+        Validation.minSize(author,2,"author");
         this.author = author;
+        //Apply the xxHash function
+        this.id = LongHashFunction.xx().hashChars(title+source+author);
         this.url = url;
         this.urlImage = urlImage;
         this.description = description;
+        // Validation of Content
+        Validation.notNull(content, "content");
         this.content = content;
+        // Validation of Published
+        Validation.notNull(publishedAt, "publishedAt");
         this.publishedAt = publishedAt;
     }
 
@@ -108,48 +117,56 @@ public final class News {
     public Long getId() {
         return id;
     }
+
     /**
      * @return the title.
      */
     public String getTitle() {
         return title;
     }
+
     /**
      * @return the sources.
      */
     public String getSource() {
         return source;
     }
+
     /**
      * @return the author.
      */
     public String getAuthor() {
         return author;
     }
+
     /**
      * @return the url.
      */
     public String getUrl() {
         return url;
     }
+
     /**
      * @return the image.
      */
     public String getUrlImage() {
         return urlImage;
     }
+
     /**
      * @return the description.
      */
     public String getDescription() {
         return description;
     }
+
     /**
      * @return the content.
      */
     public String getContent() {
         return content;
     }
+
     /**
      * @return the date of publish.
      */
