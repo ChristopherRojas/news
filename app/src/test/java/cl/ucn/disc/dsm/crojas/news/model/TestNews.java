@@ -35,31 +35,107 @@ public class TestNews {
     @Test
     public void testNewsContructor(){
         log.debug("Testing ..");
-        final Long id = 0L;
+        News news = new News ("The Title",
+                "The Source",
+                "The Author",
+                "The Url",
+                "The Url Image",
+                "Description",
+                "The Content",
+                ZonedDateTime.now(ZoneId.of("-3"))
+        );
+          log.debug("The id:{}.", news.getId());
+        Assertions.assertEquals( 1182003507361219134L, news.getId(), "Wrong id !" );
+        log.debug("Title null ..");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->{
+             new News (
+                      null,
+                     "The Source",
+                     "The Author",
+                     "The Url",
+                     "The Url Image",
+                     "Description",
+                     "The Content",
+                     ZonedDateTime.now(ZoneId.of("-3"))
 
-        final String title = "Title";
+             );
 
-        final String source = "Source";
+        });
+        log.debug("Source null ..");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->{
+            new News (
+                    "Title",
+                    null,
+                    "The Author",
+                    "The Url",
+                    "The Url Image",
+                    "Description",
+                    "The Content",
+                    ZonedDateTime.now(ZoneId.of("-3"))
 
-        final  String author = "Author";
+            );
 
-        final String url = "url";
+        });
+        log.debug("Author null ..");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->{
+            new News (
+                    "Title",
+                    "The Source",
+                    null,
+                    "The Url",
+                    "The Url Image",
+                    "Description",
+                    "The Content",
+                    ZonedDateTime.now(ZoneId.of("-3"))
 
-        final String urlImage = "urlImage";
+            );
 
-        final String description = "Descriptions";
+        });
+        log.debug("Description null ..");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->{
+            new News (
+                    "Title",
+                    "The Source",
+                    "Author",
+                    "The Url",
+                    "The Url Image",
+                    null,
+                    "The Content",
+                    ZonedDateTime.now(ZoneId.of("-3"))
 
-        final String content = "Contents";
+            );
 
-        final ZonedDateTime publishedAt = ZonedDateTime.now(ZoneId.of("-3"));
+        });
+        log.debug("Content null ..");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->{
+            new News (
+                    "Title",
+                    "The Source",
+                    "Author",
+                    "The Url",
+                    "The Url Image",
+                    "Description",
+                    null,
+                    ZonedDateTime.now(ZoneId.of("-3"))
 
-        // Instance the News
-        News news = new News( title, source, author, url, urlImage, description, content, publishedAt );
+            );
 
-        // Testing
-        Assertions.assertEquals(id, news.getId());
+        });
+        log.debug("PublishedAt null ..");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->{
+            new News (
+                    "Title",
+                    "The Source",
+                    "Author",
+                    "The Url",
+                    "The Url Image",
+                    "Description",
+                    "The Content",
+                  null
+            );
 
-        log.debug("Done.");
+        });
+        log.debug("Done!.");
     }
 
 
