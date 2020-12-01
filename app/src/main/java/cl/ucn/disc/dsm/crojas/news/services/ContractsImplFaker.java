@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
+import cl.ucn.disc.dsm.crojas.news.utils.Validation;
 
 /**
  * The faker implementation of {@link Contracts}.
@@ -53,9 +54,8 @@ public class ContractsImplFaker implements Contracts {
         final Faker faker = Faker.instance();
 
         for (int i = 0; i < 5; i++) {
-
+//Integer.toUnsignedLong(i),
             this.theNews.add(new News(
-                    Integer.toUnsignedLong(i),
                     faker.book().title(),
                     faker.name().username(),
                     faker.name().fullName(),
@@ -97,7 +97,16 @@ public class ContractsImplFaker implements Contracts {
      */
     @Override
     public void saveNews(final News news) {
-        // FIXME: Don't allow duplicated !!
+        //Nullity
+        Validation.notNull(news, "news");
+
+        //Check duplicates
+        for (News n : this.theNews){
+            if (n.getId().equals(news.getId())){
+                throw new IllegalArgumentException("Can't allow duplicate news !");
+            }
+        }
+        //Add news
         this.theNews.add(news);
     }
 }
