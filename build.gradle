@@ -1,3 +1,20 @@
+//Build a number linked to the date to USB as version.
+def YEAR_WEEK = new Date().format("yyww").toInteger()
+def DAY = new Date().format("u").toInteger()
+def HOUR_MINUTE = new Date().format("HHmm").toInteger()
+
+//The build time
+def BUILD_TIMESTAMP = 10000* YEAR_WEEK + 10000 * DAY + HOUR_MINUTE
+
+// Semantic Versioning
+def MAJOR = 1
+def MINOR = 0
+def PATCH =  BUILD_TIMESTAMP
+//Using https://es.wikipedia.org/wiki/Anexo:Lagos_de_Chile
+def NAME = "Alegre"
+//The Build version
+def BUILD_VERSION = "${NAME}-${MAJOR}.${MINOR}.${PATCH}"
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: 'com.github.ben-manes.versions'
 
@@ -17,6 +34,11 @@ buildscript {
 }
 
 allprojects {
+
+    ext.buildTimestamp = BUILD_TIMESTAMP
+    ext.buildVersion = BUILD_VERSION
+
+    //Use the temp directory to build temporals
     repositories {
         google()
         jcenter()
