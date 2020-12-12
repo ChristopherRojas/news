@@ -10,6 +10,10 @@
 
 package cl.ucn.disc.dsm.crojas.news.services;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.kwabenaberko.newsapilib.models.Article;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -23,6 +27,11 @@ import org.threeten.bp.ZonedDateTime;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
 import cl.ucn.disc.dsm.crojas.news.utils.Validation;
@@ -60,7 +69,7 @@ public final class ContractsImplNewsApi implements Contracts {
         boolean needFix = false ;
 
         //Fix the author null
-        if (article.getAuthor() == null){
+        if (article.getAuthor() == null || article.getAuthor().length() ==0){
             article.setAuthor("No Author");
             needFix = true;
         }
@@ -96,6 +105,7 @@ public final class ContractsImplNewsApi implements Contracts {
      * @param size size of the list.
      * @return the List of News.
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<News> retrieveNews(Integer size) {
         try {
@@ -107,11 +117,29 @@ public final class ContractsImplNewsApi implements Contracts {
                 //log.debug("Article: {}.",ToStringBuilder.reflectionToString(article,ToStringStyle.MULTI_LINE_STYLE));
                 news.add(toNews(article));
             }
-            return  news;
+            // Filter and sort the News
+            // Remote the duplicates (by id)
+            // Sort the stream by publishedAt
+            // return the stream to list
+            return  news.stream().filter(distintById(News::getId))
+                    .sorted((k1, k2)->k2.getPublishedAt().compareTo(k1.getPublishedAt()))
+                    .collect(Collectors.toList());
         } catch (IOException ex){
             log.error("Error", ex);
             return null;
         }
+    }
+
+    /**
+     * Filter the stream.
+     * @param idExtractor
+     * @param <T> news to filter
+     * @return true if the news alrady exists.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private static <T>Predicate<T> distintById(Function<? super T , ?>  idExtractor){
+        Map<Object ,Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(idExtractor.apply(t), Boolean.TRUE) == null;
     }
 
     /**
