@@ -21,10 +21,15 @@ package cl.ucn.disc.dsm.crojas.news;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.adapters.ModelAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,52 +37,62 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
+import cl.ucn.disc.dsm.crojas.news.model.NewsItem;
 import cl.ucn.disc.dsm.crojas.news.services.Contracts;
 import cl.ucn.disc.dsm.crojas.news.services.ContractsImplNewsApi;
 
 /**
-* The Main Class
-* @author Christopher Rojas-Garri.
-* */
-
+ * The Main Class
+ *
+ * @author Christopher Rojas-Garri.
+ */
 public class MainActivity extends AppCompatActivity {
+
     /**
      * The Logger
      */
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
+
     /**
      * THe List View
      */
      protected ListView listView;
+
     /**
      * OnCreate.
      *
      * @param savedInstanceState used to reload the app.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log.debug("OnCreate...");
         setContentView(R.layout.activity_main);
-        this.listView = findViewById(R.id.am_lv_news);
 
-        //Get the news in the background thread
+        // The FastAdapter
+        ModelAdapter<News, NewsItem> newsAdapter = new ModelAdapter<>(NewsItem::new);
+        FastAdapter<NewsItem> fastAdapter = FastAdapter.with(newsAdapter);
+        fastAdapter.withSelectable(false);
+
+        // The Recycler View
+        RecyclerView recyclerView = findViewById(R.id.am_rv_news);
+        recyclerView.setAdapter(fastAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+
+        // Get the news in the background thread
         AsyncTask.execute(() -> {
-            Contracts contracts = new ContractsImplNewsApi("b7f870ce98c249898a22cf1a244c02bc");
 
-            //Get the news from NewsApi (Internet)
+            // Using the contracts
+           Contracts contracts = new ContractsImplNewsApi("b7f870ce98c249898a22cf1a244c02bc");
+
+            // Get the news
             List<News> listNews = contracts.retrieveNews(30);
 
-            //Build the simple adapter to show the list of news (String!)
-            ArrayAdapter<String> adapter = new ArrayAdapter(this,
-                    android.R.layout.simple_list_item_1,
-                    listNews);
-
-            // Set the adapter !
-            runOnUiThread(()->{
-            this.listView.setAdapter(adapter);
-           });
+            // Set the adapter
+            runOnUiThread(() -> {
+                newsAdapter.add(listNews);
+            });
         });
     }
 }
