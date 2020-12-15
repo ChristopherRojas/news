@@ -91,6 +91,7 @@ dependencies {
     //FastAdapter + RecyclerView
     implementation 'com.mikepenz:fastadapter:3.3.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // Acra Library https://github.com/ACRA/acra
     implementation "ch.acra:acra-http:5.7.0"
