@@ -1,0 +1,17 @@
+<configuration debug="true">
+
+    <shutdownHook/>
+
+    <appender name="Console" class="ch.qos.logback.classic.android.LogcatAppender" >
+        <encoder>
+            <pattern>%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{36}:%line -> %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="cl.ucn.disc" level="TRACE"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="Console"/>
+    </root>
+
+</configuration>
