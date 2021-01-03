@@ -17,10 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
-/**
- *  Testing of News
- * @author Christopher Rojas-Garri
- */
 public class TestNews {
 
     /**
@@ -137,6 +133,4 @@ public class TestNews {
         });
         log.debug("Done!.");
     }
-
-
 }

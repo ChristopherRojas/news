@@ -37,7 +37,7 @@ public class TestContractsImplNewsApi {
     @Test
     public void testRetrieveNews(){
      log.debug( "Testing ..");
-        String apiKey = " b7f870ce98c249898a22cf1a244c02bc";
+        String apiKey = "b7f870ce98c249898a22cf1a244c02bc";
 
        //The Contracts
         Contracts contracts = new ContractsImplNewsApi(apiKey);
