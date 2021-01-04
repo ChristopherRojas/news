@@ -31,6 +31,7 @@ public class TestContractsImplNewsApi {
      * The Logger
      */
     private static final Logger log = LoggerFactory.getLogger(TestContractsImplNewsApi.class);
+
     /**
      * The Test
      */
@@ -49,11 +50,10 @@ public class TestContractsImplNewsApi {
         Assertions.assertNotNull(news, "List Null :(");
         Assertions.assertEquals(10,news.size(),"Wrong size! :(");
 
-       //Show The News.
+        //Show The News.
         for (News n : news){
             log.debug("News:{}.", ToStringBuilder.reflectionToString(n, ToStringStyle.MULTI_LINE_STYLE));
         }
      log.debug( ".. Done. ");
    }
-
 }
