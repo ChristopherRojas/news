@@ -100,14 +100,13 @@ class NewsController extends Controller
      */
     public function pageSize($n)
     {
-        //TRY ME: Probar si funciona, sino buscar una forma por el mismo PHP
+        //TRY ME: Ejecutar, para ver si la query esta bien hecha, puede que se tenga que buscar la equivalente de LIMIT para MySQL
         //Select * from News Limit $n;
         $news = mysqli::query("Select * from News Limit %s",$n);
 
-        //FIX ME: No estoy seguro, si funcionará de esta forma. PD: Mi duda nace en el tipo de dato.
         return response([
             'message' =>'Retrieved Successfully',
-            'news'=> $news
+            'news'=> json_encode($news)
         ], status:200) ;
     }
 
@@ -119,14 +118,12 @@ class NewsController extends Controller
      */
     public function page($id)
     {
-        //TRY ME: Probar si funciona, sino buscar una forma por el mismo PHP
         //Select * from News n where n.id = $id
         $news = mysqli::query("Select * from News n where n.id = %s",$id);
 
-        //FIX ME: No estoy seguro, si funcionará de esta forma. PD: Mi duda nace en el tipo de dato.
         return response([
             'message' =>'Retrieved Successfully',
-            'news'=> $news
+            'news'=> json_encode($news)
         ], status:200) ;
     }
 
@@ -138,14 +135,13 @@ class NewsController extends Controller
      */
     public function q($keywords)
     {
-        //TRY ME: Probar si funciona, sino buscar una forma por el mismo PHP
+        //TRY ME: Si no funciona, buscar una funcion que sea equivalente a CONTAINS(*,"word") pero para MySQL
         //Select * from News where INSTR(*, $keywords) > 0
         $news = mysqli::query("Select * from News where INSTR(*,%s)",$keywords);
 
-        //FIX ME: No estoy seguro, si funcionará de esta forma. PD: Mi duda nace en el tipo de dato.
         return response([
             'message' =>'Retrieved Successfully',
-            'news'=> $news
+            'news'=> json_encode($news)
         ], status:200) ;
     }
 }
