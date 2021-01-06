@@ -89,4 +89,39 @@ class NewsController extends Controller
     {
         //
     }
+
+    /**
+     * Display a listing of n news
+     * Were the max of display is 100
+     * If the number of news is not indicated, it is left at 20
+     *
+     * @param int $n
+     * @return \Illuminate\Http\Response
+     */
+    public function pageSize($n)
+    {
+        //
+    }
+
+    /**
+     * Shows the page that has the id entered
+     *
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function page($id)
+    {
+        //
+    }
+
+    /**
+     * Search the news with the keyword.
+     *
+     * @param $keywords
+     * @return \Illuminate\Http\Response
+     */
+    public function q($keywords)
+    {
+        //
+    }
 }
