@@ -80,8 +80,8 @@ public final class NewsApiService {
 
         //query.put("source", topHeadLinesRequest.getSources());
         //query.put("q", topHeadLinesRequest.getQ());
-
         query.put("pageSize", pageSize.toString());
+
         //query.put("page", topHeadLinesRequest.getPages());
 
         //The response (syncronic!)

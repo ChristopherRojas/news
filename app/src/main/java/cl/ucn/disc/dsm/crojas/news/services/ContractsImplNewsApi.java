@@ -126,6 +126,7 @@ public final class ContractsImplNewsApi implements Contracts {
                 //log.debug("Article: {}.",ToStringBuilder.reflectionToString(article,ToStringStyle.MULTI_LINE_STYLE));
                 news.add(toNews(article));
             }
+
             // Filter and sort the News
             // Remote the duplicates (by id)
             // Sort the stream by publishedAt

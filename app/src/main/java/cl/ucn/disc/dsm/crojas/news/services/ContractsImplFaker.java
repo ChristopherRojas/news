@@ -96,6 +96,7 @@ public class ContractsImplFaker implements Contracts {
      */
     @Override
     public void saveNews(final News news) {
+
         //Nullity
         Validation.notNull(news, "news");
 
@@ -105,6 +106,7 @@ public class ContractsImplFaker implements Contracts {
                 throw new IllegalArgumentException("Can't allow duplicate news !");
             }
         }
+
         //Add news
         this.theNews.add(news);
     }
