@@ -25,6 +25,7 @@ import retrofit2.Response;
 
 /**
  * Naive syncronic NewsApi implementation.
+ *
  * @author Christpher Rojas-Garri
  */
 public final class NewsApiService {
@@ -41,39 +42,45 @@ public final class NewsApiService {
 
     /**
      * The Constructor.
+     *
      * @param apiKey
      */
     public NewsApiService(String apiKey) {
         Validation.notNull(apiKey, "apiKey");
-        this.apiKey= apiKey;
+        this.apiKey = apiKey;
         this.apiService = APIClient.getAPIService();
     }
 
     /**
      * The getTopHeadLines adaptor.
+     *
      * @param category
      * @param pageSize
      * @return
      * @throws IOException
      */
-    public List<Article> getTopHeadLines(final String category,final Integer pageSize) throws IOException{
+    public List<Article> getTopHeadLines(final String category, final Integer pageSize) throws IOException {
         Validation.notNull(category, "category");
-        Validation.notNull(pageSize,"pageSize");
+        Validation.notNull(pageSize, "pageSize");
 
-        if (pageSize < 1){
-             throw new IllegalArgumentException("Error: Pagesize need to be > 0");
+        if (pageSize < 1) {
+            throw new IllegalArgumentException("Error: Pagesize need to be > 0");
 
         }
+
         //TODO: Implements the correect map to request parameters.
         //https://newsapi.org/docs/endpoints/top-headlines
         // The map of parameters.
         Map<String, String> query = new HashMap<>();
         query.put("apiKey", this.apiKey);
+
         //query.put("country", topHeadLinesRequest.getCountry());
         //query.put("language", topHeadLinesRequest.getLanguage());
         query.put("category", category);
+
         //query.put("source", topHeadLinesRequest.getSources());
         //query.put("q", topHeadLinesRequest.getQ());
+
         query.put("pageSize", pageSize.toString());
         //query.put("page", topHeadLinesRequest.getPages());
 
@@ -81,9 +88,9 @@ public final class NewsApiService {
         Response<ArticleResponse> response = apiService.getTopHeadlines(query).execute();
 
         //All ok, return the data
-        if (response.isSuccessful()){
-            return  response.body().getArticles();
+        if (response.isSuccessful()) {
+            return response.body().getArticles();
         }
-        throw new RuntimeException("Error:"+ response.code()+"--->"+response.errorBody().toString());
+        throw new RuntimeException("Error:" + response.code() + "--->" + response.errorBody().toString());
     }
 }

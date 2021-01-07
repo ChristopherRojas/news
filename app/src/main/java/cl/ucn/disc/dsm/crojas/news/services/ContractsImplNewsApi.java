@@ -38,56 +38,65 @@ import cl.ucn.disc.dsm.crojas.news.utils.Validation;
 
 /**
  * The NewsApi Implementation of contracts.
+ *
  * @author Christopher Rojas-Garri
  */
 public final class ContractsImplNewsApi implements Contracts {
+
     /**
      * The Logger
      */
     private static final Logger log = LoggerFactory.getLogger(ContractsImplNewsApi.class);
+
     /**
      * The connection to NewsApi;
      */
     private final NewsApiService newsApiService;
+
     /**
      * THe constructor.
+     *
      * @param apiKey
      */
     public ContractsImplNewsApi(String apiKey) {
-        Validation.notNull(apiKey,"ApiKey !!");
+        Validation.notNull(apiKey, "ApiKey !!");
         this.newsApiService = new NewsApiService(apiKey);
     }
 
     /**
      * The Assembler /Transformer pattern!
+     *
      * @param article used to source.
      * @return
      */
-    private static News toNews (final Article article){
-         Validation.notNull(article,"Article null! ?");
-         //Warning message?
-        boolean needFix = false ;
+    private static News toNews(final Article article) {
+        Validation.notNull(article, "Article null! ?");
+
+        //Warning message?
+        boolean needFix = false;
 
         //Fix the author null
-        if (article.getAuthor() == null || article.getAuthor().length() ==0){
+        if (article.getAuthor() == null || article.getAuthor().length() == 0) {
             article.setAuthor("No Author");
             needFix = true;
         }
+
         //Fix more restrictions
-        if (article.getDescription() == null || article.getDescription().length()==0){
+        if (article.getDescription() == null || article.getDescription().length() == 0) {
             article.setDescription("No Descriptions");
             needFix = true;
         }
+
         //yes, warning message..
-        if (needFix){
-          log.warn("Article with invalid restriccions: {}.", ToStringBuilder.reflectionToString(article, ToStringStyle.MULTI_LINE_STYLE));
+        if (needFix) {
+            log.warn("Article with invalid restriccions: {}.", ToStringBuilder.reflectionToString(article, ToStringStyle.MULTI_LINE_STYLE));
         }
 
         //The date
         ZonedDateTime publishedAt = ZonedDateTime.parse(article.getPublishedAt()).withZoneSameInstant(ZoneId.of("-3"));
 
         //the News
-        return  new News(
+        return new News(
                 article.getTitle(),
                 article.getSource().getName(),
                 article.getAuthor(),
@@ -109,11 +118,11 @@ public final class ContractsImplNewsApi implements Contracts {
     @Override
     public List<News> retrieveNews(Integer size) {
         try {
-            List<Article>articles = newsApiService.getTopHeadLines("technology", size);
+            List<Article> articles = newsApiService.getTopHeadLines("technology", size);
 
             //The list of Articles to list of News
             List<News> news = new ArrayList<>();
-            for (Article article : articles){
+            for (Article article : articles) {
                 //log.debug("Article: {}.",ToStringBuilder.reflectionToString(article,ToStringStyle.MULTI_LINE_STYLE));
                 news.add(toNews(article));
             }
@@ -121,10 +130,10 @@ public final class ContractsImplNewsApi implements Contracts {
             // Remote the duplicates (by id)
             // Sort the stream by publishedAt
             // return the stream to list
-            return  news.stream().filter(distintById(News::getId))
-                    .sorted((k1, k2)->k2.getPublishedAt().compareTo(k1.getPublishedAt()))
+            return news.stream().filter(distintById(News::getId))
+                    .sorted((k1, k2) -> k2.getPublishedAt().compareTo(k1.getPublishedAt()))
                     .collect(Collectors.toList());
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("Error", ex);
             return null;
         }
@@ -132,13 +141,14 @@ public final class ContractsImplNewsApi implements Contracts {
 
     /**
      * Filter the stream.
+     *
      * @param idExtractor
-     * @param <T> news to filter
+     * @param <T>         news to filter
      * @return true if the news alrady exists.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private static <T>Predicate<T> distintById(Function<? super T , ?>  idExtractor){
-        Map<Object ,Boolean> seen = new ConcurrentHashMap<>();
+    private static <T> Predicate<T> distintById(Function<? super T, ?> idExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(idExtractor.apply(t), Boolean.TRUE) == null;
     }
 
@@ -149,6 +159,6 @@ public final class ContractsImplNewsApi implements Contracts {
      */
     @Override
     public void saveNews(News news) {
-     throw new NotImplementedException("Can't save news in NewsAPI !");
+        throw new NotImplementedException("Can't save news in NewsAPI !");
     }
 }

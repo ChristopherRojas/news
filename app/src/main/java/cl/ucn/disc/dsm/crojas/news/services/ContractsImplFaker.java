@@ -32,8 +32,8 @@ import cl.ucn.disc.dsm.crojas.news.utils.Validation;
  *
  * @author chritopher Rojas-Garri.
  */
-
 public class ContractsImplFaker implements Contracts {
+
     /**
      * The Logger.
      */
@@ -54,7 +54,7 @@ public class ContractsImplFaker implements Contracts {
         final Faker faker = Faker.instance();
 
         for (int i = 0; i < 5; i++) {
-//Integer.toUnsignedLong(i),
+            //Integer.toUnsignedLong(i),
             this.theNews.add(new News(
                     faker.book().title(),
                     faker.name().username(),
@@ -76,8 +76,7 @@ public class ContractsImplFaker implements Contracts {
      * @param size size of the list.
      * @return the List of News.
      */
-
-   // TODO : Default implementation
+    // TODO : Default implementation
     @Override
     public List<News> retrieveNews(final Integer size) {
 
@@ -87,7 +86,7 @@ public class ContractsImplFaker implements Contracts {
         }
 
         // The last "size" elements.
-        return this.theNews.subList(0,theNews.size());
+        return this.theNews.subList(0, theNews.size());
     }
 
     /**
@@ -101,8 +100,8 @@ public class ContractsImplFaker implements Contracts {
         Validation.notNull(news, "news");
 
         //Check duplicates
-        for (News n : this.theNews){
-            if (n.getId().equals(news.getId())){
+        for (News n : this.theNews) {
+            if (n.getId().equals(news.getId())) {
                 throw new IllegalArgumentException("Can't allow duplicate news !");
             }
         }
