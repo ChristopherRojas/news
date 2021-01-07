@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020. Christopher Rojas-Garri, christopher.rojas@alumnos.ucn.cl
  *
@@ -19,11 +20,15 @@
 
 package cl.ucn.disc.dsm.crojas.news;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,17 +61,58 @@ public class MainActivity extends AppCompatActivity {
     /**
      * THe List View
      */
-     protected ListView listView;
+    protected ListView listView;
+
+    /**
+     *
+     */
+    SwitchCompat switchCompat;
+    SharedPreferences sharedPreferences = null;
 
     /**
      * OnCreate.
-     *
      * @param savedInstanceState used to reload the app.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Switch Night Mode Theme
+        switchCompat = findViewById(R.id.switchCompat);
+
+        //Saving state of our app
+        sharedPreferences = getSharedPreferences("night", 0);
+        Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);
+        if (booleanValue) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            switchCompat.setChecked(true);
+        }
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            /**
+             * Switch button on checked changed
+             * @param buttonView
+             * @param isChecked
+             */
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    switchCompat.setChecked(true);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("night_mode", true);
+                    editor.commit();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    switchCompat.setChecked(false);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("night_mode", false);
+                    editor.commit();
+
+                }
+            }
+        });
 
         //The Toolbar
         this.setSupportActionBar(findViewById(R.id.am_t_toolbar));
@@ -87,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask.execute(() -> {
 
             // Using the contracts
-           Contracts contracts = new ContractsImplNewsApi("b7f870ce98c249898a22cf1a244c02bc");
+            //TODO:APiKEy Ocult
+            Contracts contracts = new ContractsImplNewsApi("b7f870ce98c249898a22cf1a244c02bc");
 
             // Get the news
             List<News> listNews = contracts.retrieveNews(30);

@@ -22,12 +22,17 @@ package cl.ucn.disc.dsm.crojas.news.model;
 import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.mikepenz.fastadapter.items.ModelAbstractItem;
+
 import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.List;
+
 import cl.ucn.disc.dsm.crojas.news.R;
 
 /**
@@ -45,7 +50,6 @@ public final class NewsItem extends ModelAbstractItem<News, NewsItem, NewsItem.V
 
     /**
      * The constructor.
-     *
      * @param news The news to show.
      */
     public NewsItem(@NonNull News news) {
@@ -54,7 +58,6 @@ public final class NewsItem extends ModelAbstractItem<News, NewsItem, NewsItem.V
 
     /**
      * This function allows to return a new ViewHolder.
-     *
      * @param view used to build the ViewHolder.
      * @return the ViewHolder to the views.
      */
@@ -80,7 +83,6 @@ public final class NewsItem extends ModelAbstractItem<News, NewsItem, NewsItem.V
 
     /**
      * Bind the holder with the model.
-     *
      * @param holder   to used.
      * @param payloads ?.
      */
@@ -98,7 +100,6 @@ public final class NewsItem extends ModelAbstractItem<News, NewsItem, NewsItem.V
 
     /**
      * This method clear the holder
-     *
      * @param holder to clean.
      */
     @Override
@@ -127,7 +128,7 @@ public final class NewsItem extends ModelAbstractItem<News, NewsItem, NewsItem.V
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.title = itemView.findViewById(R.id.in_tv_title);
-            this.author = itemView.findViewById(R.id.in_tv_author);
+            this.author = itemView.findViewById(R.id.in_tv_autor);
             this.source = itemView.findViewById(R.id.in_tv_source);
             this.description = itemView.findViewById(R.id.in_tv_description);
             this.publishedAt = itemView.findViewById(R.id.in_tv_published_at);

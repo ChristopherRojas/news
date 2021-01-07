@@ -29,6 +29,7 @@ import cl.ucn.disc.dsm.crojas.news.utils.Validation;
 
 /**
  * The Domain model :News.
+ *
  * @author Christopher Rojas-Garri
  */
 public final class News {
@@ -46,49 +47,42 @@ public final class News {
 
     /**
      * The Source.
-     *
      */
     private final String source;
 
     /**
      * The Author.
-     *
      */
-    private final  String author;
+    private final String author;
 
     /**
      * The Url.
-     *
      */
     private final String url;
 
     /**
      * The Url of Image.
-     *
      */
     private final String urlImage;
 
     /**
      * The Description.
-     *
      */
     private final String description;
 
     /**
      * The Content.
-     *
      */
     private final String content;
 
     /**
      * The Date of publish.
-     *
      */
     private final ZonedDateTime publishedAt;
 
-
     /**
      * The Constructor
+     *
      * @param title
      * @param source
      * @param author
@@ -98,24 +92,30 @@ public final class News {
      * @param content
      * @param publishedAt
      */
-    public News( String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
+    public News(String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
+
         //Validation of Title
-        Validation.minSize(title,2,"title");
+        Validation.minSize(title, 2, "title");
         this.title = title;
+
         //Validation of source
-        Validation.minSize(source,2,"source");
+        Validation.minSize(source, 2, "source");
         this.source = source;
+
         //Validation of author
-        Validation.minSize(author,2,"author");
+        Validation.minSize(author, 2, "author");
         this.author = author;
+
         //Apply the xxHash function
-        this.id = LongHashFunction.xx().hashChars(title+source+author);
+        this.id = LongHashFunction.xx().hashChars(title + source + author);
         this.url = url;
         this.urlImage = urlImage;
         this.description = description;
+
         // Validation of Content
         Validation.notNull(content, "content");
         this.content = content;
+
         // Validation of Published
         Validation.notNull(publishedAt, "publishedAt");
         this.publishedAt = publishedAt;
