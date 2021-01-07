@@ -89,4 +89,59 @@ class NewsController extends Controller
     {
         //
     }
+
+    /**
+     * Display a listing of n news
+     * Were the max of display is 100
+     * If the number of news is not indicated, it is left at 20
+     *
+     * @param int $n
+     * @return \Illuminate\Http\Response
+     */
+    public function pageSize($n)
+    {
+        //TRY ME: Ejecutar, para ver si la query esta bien hecha, puede que se tenga que buscar la equivalente de LIMIT para MySQL
+        //Select * from News Limit $n;
+        $news = mysqli::query("Select * from News Limit %s",$n);
+
+        return response([
+            'message' =>'Retrieved Successfully',
+            'news'=> json_encode($news)
+        ], status:200) ;
+    }
+
+    /**
+     * Shows the page that has the id entered
+     *
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function page($id)
+    {
+        //Select * from News n where n.id = $id
+        $news = mysqli::query("Select * from News n where n.id = %s",$id);
+
+        return response([
+            'message' =>'Retrieved Successfully',
+            'news'=> json_encode($news)
+        ], status:200) ;
+    }
+
+    /**
+     * Search the news with the keyword.
+     *
+     * @param $keywords
+     * @return \Illuminate\Http\Response
+     */
+    public function q($keywords)
+    {
+        //TRY ME: Si no funciona, buscar una funcion que sea equivalente a CONTAINS(*,"word") pero para MySQL
+        //Select * from News where INSTR(*, $keywords) > 0
+        $news = mysqli::query("Select * from News where INSTR(*,%s)",$keywords);
+
+        return response([
+            'message' =>'Retrieved Successfully',
+            'news'=> json_encode($news)
+        ], status:200) ;
+    }
 }
