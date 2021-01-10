@@ -100,13 +100,20 @@ class NewsController extends Controller
      */
     public function pageSize($n)
     {
-        //TRY ME: Ejecutar, para ver si la query esta bien hecha, puede que se tenga que buscar la equivalente de LIMIT para MySQL
         //Select * from News Limit $n;
-        $news = mysqli::query("Select * from News Limit %s",$n);
+        if (count(func_get_args() == 1))
+        {
+            $news = News::all()->limit($n);
+        }
+        //Select * from News Limit 20;
+        else{
+            $news = News::all()->limit(20);
+        }
+
 
         return response([
             'message' =>'Retrieved Successfully',
-            'news'=> json_encode($news)
+            'news'=> $news
         ], status:200) ;
     }
 
@@ -119,11 +126,11 @@ class NewsController extends Controller
     public function page($id)
     {
         //Select * from News n where n.id = $id
-        $news = mysqli::query("Select * from News n where n.id = %s",$id);
+        $news = News::find($id);
 
         return response([
             'message' =>'Retrieved Successfully',
-            'news'=> json_encode($news)
+            'news'=> $news
         ], status:200) ;
     }
 
@@ -135,13 +142,17 @@ class NewsController extends Controller
      */
     public function q($keywords)
     {
-        //TRY ME: Si no funciona, buscar una funcion que sea equivalente a CONTAINS(*,"word") pero para MySQL
         //Select * from News where INSTR(*, $keywords) > 0
-        $news = mysqli::query("Select * from News where INSTR(*,%s)",$keywords);
+        $columns = ['id','title','author','source','url','description','content'];
+        $query = News::query();
+        foreach($columns as $column){
+            $query->orWhere($column,'LIKE',"%{$keywords}%");
+        }
+        $news = $query->get();
 
         return response([
             'message' =>'Retrieved Successfully',
-            'news'=> json_encode($news)
+            'news'=> $news
         ], status:200) ;
     }
 }
