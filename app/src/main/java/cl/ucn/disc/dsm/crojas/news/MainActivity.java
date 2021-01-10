@@ -45,6 +45,7 @@ import cl.ucn.disc.dsm.crojas.news.model.News;
 import cl.ucn.disc.dsm.crojas.news.model.NewsItem;
 import cl.ucn.disc.dsm.crojas.news.services.Contracts;
 import cl.ucn.disc.dsm.crojas.news.services.ContractsImplNewsApi;
+import cl.ucn.disc.dsm.crojas.news.services.NewsApiKey;
 
 /**
  * The Main Class
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected ListView listView;
 
     /**
-     *
+     *The Switch button
      */
     SwitchCompat switchCompat;
     SharedPreferences sharedPreferences = null;
@@ -134,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Using the contracts
             //TODO:APiKEy Ocult
-            Contracts contracts = new ContractsImplNewsApi("b7f870ce98c249898a22cf1a244c02bc");
-
+            Contracts contracts = new ContractsImplNewsApi(NewsApiKey.getTheApiKey());
             // Get the news
             List<News> listNews = contracts.retrieveNews(30);
 
