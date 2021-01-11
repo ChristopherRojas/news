@@ -1,21 +1,23 @@
 
 /*
  * Copyright (c) 2020. Christopher Rojas-Garri, christopher.rojas@alumnos.ucn.cl
+ * Copyright (c) 2021. Camilo Barrera-Arancibia,camilo.barrera@alumnos.ucn.cl
+ * Copyright (c) 2021. Marcelo Lam-Biagguini,marcelo.lam@alumnos.ucn.cl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
  * and associated documentation files (the "Software"), to deal in the Software without restriction,
- *  including without limitation the rights to use, copy, modify, merge, publish, distribute,
- *  sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
  * is furnished to do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all copies or
- *  substantial portions of the Software.
+ * substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- *  NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package cl.ucn.disc.dsm.crojas.news;
@@ -25,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -32,6 +35,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ModelAdapter;
@@ -60,18 +64,24 @@ public class MainActivity extends AppCompatActivity {
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
     /**
-     * THe List View
+     * The List View
      */
     protected ListView listView;
 
     /**
-     *The Switch button
+     * The pull to refresh
+     */
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    /**
+     * The Switch button
      */
     SwitchCompat switchCompat;
     SharedPreferences sharedPreferences = null;
 
     /**
      * OnCreate.
+     *
      * @param savedInstanceState used to reload the app.
      */
     @Override
@@ -118,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
         //The Toolbar
         this.setSupportActionBar(findViewById(R.id.am_t_toolbar));
 
+        //The swipe Refresh layout
+        swipeRefreshLayout = (SwipeRefreshLayout
+                ) findViewById(R.id.am_srl_refresh);
+
+
         // The FastAdapter
         ModelAdapter<News, NewsItem> newsAdapter = new ModelAdapter<>(NewsItem::new);
         FastAdapter<NewsItem> fastAdapter = FastAdapter.with(newsAdapter);
@@ -136,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             // Using the contracts
             //TODO:APiKEy Ocult
             Contracts contracts = new ContractsImplNewsApi(NewsApiKey.getTheApiKey());
+
             // Get the news
             List<News> listNews = contracts.retrieveNews(30);
 
@@ -144,5 +160,19 @@ public class MainActivity extends AppCompatActivity {
                 newsAdapter.add(listNews);
             });
         });
+
+        //The SwipeRefresh configure data update for news
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+
+                    //Refresh the news list until a new request is a made.
+                    @Override
+                    public void onRefresh() {
+                        fastAdapter.notifyAdapterDataSetChanged();
+                        Toast.makeText(MainActivity.this, "Se recargo", Toast.LENGTH_LONG).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
     }
 }
