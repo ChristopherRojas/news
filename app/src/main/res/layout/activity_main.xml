@@ -54,6 +54,7 @@
 
     <!-- SwipeRefreshLayout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/am_srl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!-- RecyclerView -->
