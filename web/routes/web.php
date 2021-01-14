@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
-Route::post("form",[NewsController::class,'insert']);
+//FIX ME: Problemas con NewsController, me dice que no existe.
 Route::view("/","form");
+Route::post("/store",[NewsController::class,'store']);
+Route::redirect("/store","/"); //FIX ME: Causa Error 419 Page Expired
+//Route::get('/store', [NewsController::class,'store']);
 
 
