@@ -52,6 +52,7 @@ class NewsController extends Controller
         $news->url_image = $request->url_image;
         $news->published_at = $request->published_at;
         $news->save();
+        return redirect('/')->with('status', 'News Post Form Data Has Been inserted');
     }
 
     /**
@@ -163,5 +164,8 @@ class NewsController extends Controller
             'message' =>'Retrieved Successfully',
             'news'=> $news
         ], status:200) ;
+    }
+    public function form(){
+        return view('NewsForm');
     }
 }

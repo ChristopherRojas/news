@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fe5e8bc-da83-495e-95c0-18e36fb8195b" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/../app/src/main/res/values/palettes.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
@@ -101,6 +102,9 @@
       <change beforePath="$PROJECT_DIR$/../app/src/test/java/cl/ucn/disc/dsm/crojas/news/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/test/java/cl/ucn/disc/dsm/crojas/news/ExampleUnitTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/test/java/cl/ucn/disc/dsm/crojas/news/model/TestNews.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/test/java/cl/ucn/disc/dsm/crojas/news/model/TestNews.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/test/java/cl/ucn/disc/dsm/crojas/news/services/TestContractsImplNewsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/test/java/cl/ucn/disc/dsm/crojas/news/services/TestContractsImplNewsApi.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,6 +267,17 @@
       <updated>1609176810332</updated>
       <workItem from="1609176857717" duration="7183000" />
       <workItem from="1609637783327" duration="725000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1609854167169" duration="331000" />
+      <workItem from="1609854508647" duration="809000" />
+      <workItem from="1609855563126" duration="1202000" />
+      <workItem from="1609962841210" duration="1505000" />
+      <workItem from="1609965332499" duration="878000" />
+      <workItem from="1609968120494" duration="3304000" />
+      <workItem from="1610024428355" duration="9557000" />
+      <workItem from="1610400268758" duration="725000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>

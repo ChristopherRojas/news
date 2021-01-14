@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\NewsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
-//FIX ME: Problemas con NewsController, me dice que no existe.
-Route::view("/","form");
-Route::post("/store",[NewsController::class,'store']);
-Route::redirect("/store","/"); //FIX ME: Causa Error 419 Page Expired
+//Route::view("/","form");
+//Route::redirect("/store","/"); //FIX ME: Causa Error 419 Page Expired
 //Route::get('/store', [NewsController::class,'store']);
+Route::get('/',[NewsController::class,'form']);
+Route::post("/store-form",[NewsController::class,'store']);
 
 

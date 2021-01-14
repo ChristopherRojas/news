@@ -27,7 +27,7 @@
 <body>
     <h1>Formulario de ingreso de noticias.</h1>
     <hr>
-    <form action="store" method="POST">
+    <form name="form" id = "form" method="POST" action="{{url('store-form')}}">>
         {{--Primera columna--}}
         <div id="division">
             <div>
@@ -76,9 +76,9 @@
         </div>
         {{--Botón--}}
         <div id="button">
-            <button id = "formulario" type="submit">Ingresar</button>
+             <button id = "formulario"  type="submit" class="btn btn-primary">Ingresar</button>
         </div>
 
 
-    </form>
+</form>
 </body>
