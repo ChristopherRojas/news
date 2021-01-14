@@ -38,17 +38,18 @@
                     <label for="exampleInputEmail1">Image URL</label>
                     <input type="url" id="url_image" name="url_image" class="form-control" required="">
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Published At</label>
-                    <input type="date" id="published_at" name="published_at" class="form-control" required="">
-                </div>
+
                 <div class="form-group">
                     <label for="exampleInputEmail1">Content</label>
-                    <textarea id="content" name="content" class="form-control" required=""></textarea>
+                    <textarea id="contentt" name="contentt" class="form-control" required=""></textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
                     <textarea id="description" name="description" class="form-control" required=""></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Published At</label>
+                    <input type="date" id="published_at" name="published_at" class="form-control" required="">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

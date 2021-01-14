@@ -13,12 +13,6 @@ use \App\Http\Controllers\NewsController;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-//Route::view("/","form");
-//Route::redirect("/store","/"); //FIX ME: Causa Error 419 Page Expired
-//Route::get('/store', [NewsController::class,'store']);
 Route::get('/',[NewsController::class,'form']);
 Route::post("/store-form",[NewsController::class,'store']);
 

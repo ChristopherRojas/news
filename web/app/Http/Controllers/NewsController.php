@@ -48,7 +48,7 @@ class NewsController extends Controller
         $news->source = $request->source;
         $news->url = $request->url;
         $news->description = $request->description;
-        $news->content = $request->content;
+        $news->content = $request->contentt;
         $news->url_image = $request->url_image;
         $news->published_at = $request->published_at;
         $news->save();
