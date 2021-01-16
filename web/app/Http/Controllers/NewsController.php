@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Integer;
 
 class NewsController extends Controller
 {
@@ -16,7 +17,6 @@ class NewsController extends Controller
     {
         //select * from news
         $news = News::all();
-
         //Return the get request with code 200
         return response([
             'message' =>'Retrieved Successfully',
@@ -72,9 +72,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view("EditForm");
+
     }
 
     /**
@@ -92,13 +93,15 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        News::destroy($request->id);
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been deleted');
     }
+
 
     /**
      * Display a listing of n news
@@ -119,7 +122,6 @@ class NewsController extends Controller
         else{
             $news = News::all()->limit(20);
         }
-
 
         return response([
             'message' =>'Retrieved Successfully',

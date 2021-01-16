@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Laravel 8 Form Example Tutorial</title>
+    <title>My News</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -16,7 +16,7 @@
             MyNews - The Best API for News
         </div>
         <div class="card-body">
-            <form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('store-form')}}">
+            <form name="add-news-post-form" id="add-news-post-form" method="post" action="{{url('store-form')}}">
                 @csrf
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
@@ -38,7 +38,6 @@
                     <label for="exampleInputEmail1">Image URL</label>
                     <input type="url" id="url_image" name="url_image" class="form-control" required="">
                 </div>
-
                 <div class="form-group">
                     <label for="exampleInputEmail1">Content</label>
                     <textarea id="contentt" name="contentt" class="form-control" required=""></textarea>

@@ -15,5 +15,7 @@ use \App\Http\Controllers\NewsController;
 
 Route::get('/',[NewsController::class,'form']);
 Route::post("/store-form",[NewsController::class,'store']);
+Route::get('/edit',[NewsController::class,'edit']);
+Route::post('/delete-news',[NewsController::class,'destroy']);
 
 
