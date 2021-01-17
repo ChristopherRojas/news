@@ -85,9 +85,19 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $news = News::find($request->id);
+        $news->title = $request->title;
+        $news->author = $request->author;
+        $news->source = $request->source;
+        $news->url = $request->url;
+        $news->description = $request->description;
+        $news->content = $request->contentt;
+        $news->url_image = $request->url_image;
+        $news->published_at = $request->published_at;
+        $news->save();
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been Edit');
     }
 
     /**
@@ -169,5 +179,13 @@ class NewsController extends Controller
     }
     public function form(){
         return view('NewsForm');
+    }
+
+    public function showedit(Request $request){
+        $news = News::find($request->id);
+        return redirect('/editform')->with('news', $news);
+    }
+    public function editnews(){
+        return view('Edit');
     }
 }

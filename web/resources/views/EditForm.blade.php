@@ -22,23 +22,42 @@
             @endphp
             @forelse($newss as $news)
                 <div class = "card">
-                    <label>  {{$news->title}}</label>
-                    <label>  {{$news->author}}</label>
-                    <label>  {{$news->published_at}}</label>
-                    <label>
-                        <a id = "edit" href ="{{"/"}}" class="btn btn-xs btn-default" style="background: lightblue; color: black">Edit</a>
-                        <form action="{{ url('delete-news') }}" class="delete-form-validation" method="POST" >
-                            @csrf
-                            <input name="id" id = "id" type = "hidden" value = "{{$news->id}}">
-                            <button type="submit" class="px-4 py-2 bg-red-400 rounded">
-                                Delete
-                            </button>
-                        </form>
-                    </label>
+                    <label>{{$news->title}}</label>
+                    <label>{{$news->author}}</label>
+                    <label>{{$news->published_at}}</label>
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <ul class="nav">
+                                <li>
+                                    <form action="{{ url('edit-form') }}" method="POST" >
+                                        @csrf
+                                        <input name="id" id = "id" type = "hidden" value = "{{$news->id}}">
+                                        <button type="submit" class="px-4 py-2 bg-red-400 rounded" style="background: lightblue; color: black">Edit</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="{{ url('delete-news') }}" method="POST" >
+                                        @csrf
+                                        <input name="id" id = "id" type = "hidden" value = "{{$news->id}}">
+                                        <button type="submit" class="px-4 py-2 bg-red-400 rounded" style="background: red;color: white">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             @empty
                 <div class = "card">
                     No hay noticias ingresadas aún.
+                    <form action="{{ url('/') }}" method="POST" >
+                        @csrf
+                        <button type="submit" class="px-4 py-2 bg-red-400 rounded" style="background: red;color: white">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             @endforelse
         </div>
