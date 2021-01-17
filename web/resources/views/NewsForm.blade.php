@@ -20,23 +20,23 @@
                 @csrf
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
-                    <input type="text" id="title" name="title" class="form-control" required="">
+                    <input type="text" id="title" name="title" class="form-control" required="" minlength="2">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Author</label>
-                    <input type="text" id="author" name="author" class="form-control" required="">
+                    <input type="text" id="author" name="author" class="form-control" required="" minlength="2">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Source</label>
-                    <input type="text" id="source" name="source" class="form-control" required="">
+                    <input type="text" id="source" name="source" class="form-control" required="" minlength="2">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">URL</label>
-                    <input type="url" id="url" name="url" class="form-control" required="">
+                    <input type="url" id="url" name="url" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Image URL</label>
-                    <input type="url" id="url_image" name="url_image" class="form-control" required="">
+                    <input type="url" id="url_image" name="url_image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Content</label>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Published At</label>
-                    <input type="date" id="published_at" name="published_at" class="form-control" required="">
+                    <input type="date" id="published_at" name="published_at" class="form-control" required="" max ="{{date("Y-m-d")}}">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

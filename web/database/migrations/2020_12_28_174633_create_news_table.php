@@ -18,7 +18,7 @@ class CreateNewsTable extends Migration
             $table->string(column:'title');
             $table->string(column:'author');
             $table->string(column:'source');
-            $table->string(column:'url');
+            $table->string(column:'url')->nullable();
             $table->string(column:'url_image')->nullable();
             $table->string(column:'description');
             $table->string(column:'content');

@@ -17,5 +17,8 @@ Route::get('/',[NewsController::class,'form']);
 Route::post("/store-form",[NewsController::class,'store']);
 Route::get('/edit',[NewsController::class,'edit']);
 Route::post('/delete-news',[NewsController::class,'destroy']);
+Route::post('/edit-form',[NewsController::class,'showedit']);
+Route::get('/editform',[NewsController::class,'editnews']);
+Route::post('/edit-news',[NewsController::class,'update']);
 
 

@@ -16,39 +16,40 @@
             MyNews - The Best API for News
         </div>
         <div class="card-body">
-            <form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('store-form')}}">
+            <form name="edit-blog-post-form" id="edit-blog-post-form" method="post" action="{{url('edit-news')}}">
                 @csrf
-                <input class="form-group">
+                <input type="hidden" id="id" name="id" class="form-control" value="{{session('news')->id}}">
+                <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
-                    <input type="text" id="title" name="title" class="form-control" required="">aaaaa
+                    <input type="text" id="title" name="title" class="form-control" value="{{session('news')->title}}" required="" minlength="2">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Author</label>
-                    <input type="text" id="author" name="author" class="form-control" required="">
+                    <input type="text" id="author" name="author" class="form-control" value="{{session('news')->author}}" required="" minlength="2">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Source</label>
-                    <input type="text" id="source" name="source" class="form-control" required="">
+                    <input type="text" id="source" name="source" class="form-control" value="{{session('news')->source}}" required="" minlength="2">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">URL</label>
-                    <input type="url" id="url" name="url" class="form-control" required="">
+                    <input type="url" id="url" name="url" class="form-control" value="{{session('news')->url}}">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Image URL</label>
-                    <input type="url" id="url_image" name="url_image" class="form-control" required="">
+                    <input type="url" id="url_image" name="url_image" class="form-control" value="{{session('news')->url_image}}">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Content</label>
-                    <textarea id="contentt" name="contentt" class="form-control" required=""></textarea>
+                    <textarea id="contentt" name="contentt" class="form-control" required="">{{session('news')->content}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
-                    <textarea id="description" name="description" class="form-control" required=""></textarea>
+                    <textarea id="description" name="description" class="form-control" required="">{{session('news')->description}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Published At</label>
-                    <input type="date" id="published_at" name="published_at" class="form-control" required="">
+                    <input type="date" id="published_at" name="published_at" class="form-control" value="{{session('news')->published_at}}"required="" max ="{{date("Y-m-d")}}">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
