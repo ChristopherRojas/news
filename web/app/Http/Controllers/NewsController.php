@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Integer;
 
 class NewsController extends Controller
 {
@@ -16,7 +17,6 @@ class NewsController extends Controller
     {
         //select * from news
         $news = News::all();
-
         //Return the get request with code 200
         return response([
             'message' =>'Retrieved Successfully',
@@ -42,7 +42,17 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $news = new News;
+        $news->title = $request->title;
+        $news->author = $request->author;
+        $news->source = $request->source;
+        $news->url = $request->url;
+        $news->description = $request->description;
+        $news->content = $request->contentt;
+        $news->url_image = $request->url_image;
+        $news->published_at = $request->published_at;
+        $news->save();
+        return redirect('/')->with('status', 'News Post Form Data Has Been inserted');
     }
 
     /**
@@ -62,9 +72,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view("EditForm");
+
     }
 
     /**
@@ -74,21 +85,33 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $news = News::find($request->id);
+        $news->title = $request->title;
+        $news->author = $request->author;
+        $news->source = $request->source;
+        $news->url = $request->url;
+        $news->description = $request->description;
+        $news->content = $request->contentt;
+        $news->url_image = $request->url_image;
+        $news->published_at = $request->published_at;
+        $news->save();
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been Edit');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        News::destroy($request->id);
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been deleted');
     }
+
 
     /**
      * Display a listing of n news
@@ -109,7 +132,6 @@ class NewsController extends Controller
         else{
             $news = News::all()->limit(20);
         }
-
 
         return response([
             'message' =>'Retrieved Successfully',
@@ -154,5 +176,16 @@ class NewsController extends Controller
             'message' =>'Retrieved Successfully',
             'news'=> $news
         ], status:200) ;
+    }
+    public function form(){
+        return view('NewsForm');
+    }
+
+    public function showedit(Request $request){
+        $news = News::find($request->id);
+        return redirect('/editform')->with('news', $news);
+    }
+    public function editnews(){
+        return view('Edit');
     }
 }

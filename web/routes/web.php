@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\NewsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-Route::post("form",[NewsController::class,'insert']);
-Route::view("/","form");
+Route::get('/',[NewsController::class,'form']);
+Route::post("/store-form",[NewsController::class,'store']);
+Route::get('/edit',[NewsController::class,'edit']);
+Route::post('/delete-news',[NewsController::class,'destroy']);
+Route::post('/edit-form',[NewsController::class,'showedit']);
+Route::get('/editform',[NewsController::class,'editnews']);
+Route::post('/edit-news',[NewsController::class,'update']);
 
 
