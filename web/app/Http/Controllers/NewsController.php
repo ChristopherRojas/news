@@ -140,7 +140,7 @@ class NewsController extends Controller
     public function destroy(Request $request)
     {
         News::destroy($request->id);
-        this::updatePage();
+        NewsController::updatePage();
         return redirect('/edit')->with('status', 'News Post Form Data Has Been Deleted');
     }
 

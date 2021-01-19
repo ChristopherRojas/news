@@ -7,20 +7,23 @@
 <body>
 <div class="container mt-4">
     <div class="card">
-        <div class="card-header text-center font-weight-bold">
+        <div class="card-header text-center font-weight-bold" style="background: #009688; color:white">
             MyNews - The Best API for News
         </div>
-        <div class="card-body">
-            <form action="{{ url('insert-form') }}" method="POST" >
+        <div class="card-body" style="background: #4DB6AC">
+            <form action="{{ url('insert-form') }}" method="GET" >
                 @csrf
-                <button type="submit" class="px-5 py-2 bg-red-400 rounded" style="background: lightblue; color: black">Insert News</button>
+                <div style="width: 100%; text-align: center">
+                    <button type="submit" class="px-5 py-2 bg-red-400 rounded" style="background: #009688; color: white;">Insert News</button>
+                </div>
             </form>
-
-            <form action="{{ url('edit') }}" method="POST">
+            <form action="{{url('edit') }}" method="GET">
                 @csrf
-                <button type="submit" class="px-5 py-2 bg-red-400 rounded" style="background: red;color: white">
-                    View News
-                </button>
+                <div style="width: 100%; text-align: center">
+                    <button type="submit" class="px-5 py-2 bg-red-400 rounded" style="background: #009688; color: white">
+                        View News
+                    </button>
+                </div>
             </form>
         </div>
     </div>
