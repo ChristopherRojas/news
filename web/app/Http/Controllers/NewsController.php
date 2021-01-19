@@ -74,7 +74,7 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function showEditForm()
     {
         return view("EditForm");
 
@@ -155,7 +155,7 @@ class NewsController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public static function page($id)
+    public static function page($id = 1)
     {
         //Select * from News n where n.id = $id
         $news = News::find($id);
@@ -171,7 +171,7 @@ class NewsController extends Controller
      * @param $keywords
      * @return \Illuminate\Http\Response
      */
-    public function q($keywords)
+    public static function q($keywords = '')
     {
         //Select * from News where INSTR(*, $keywords) > 0
         $columns = ['id','title','author','source','url','description','content'];
@@ -186,15 +186,15 @@ class NewsController extends Controller
             'news'=> $news
         ], status:200) ;
     }
-    public function form(){
+    public function showNewsForm(){
         return view('NewsForm');
     }
 
-    public function showedit(Request $request){
+    public function searchNewsToEdit(Request $request){
         $news = News::find($request->id);
         return redirect('/editform')->with('news', $news);
     }
-    public function editnews(){
+    public function showEdit(){
         return view('Edit');
     }
     public function mainmenu(){

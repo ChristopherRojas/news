@@ -21,13 +21,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //News routes
 Route::resource('news', NewsController::class);
-Route::get('news/pageSize',[NewsController::class,'pageSize']);
-Route::get('news/pageSize/{n?}',[NewsController::class,'pageSize']);
+Route::get('news/{f}/{p?}', function ($f,$p){
+    if($f == "pageSize"){
+        return NewsController::pageSize($p);
+
+    }
+    if($f == 'page'){
+        return NewsController::page($p);
+    }
+    if($f == 'q'){
+        return NewsController::q($p);
+    }
 
 
-Route::get('news/page/{id}', function ($id) {
-    return NewsController::page($id);
 });
-Route::get('news/page/', function () {
-    return NewsController::page(1);
-});
+

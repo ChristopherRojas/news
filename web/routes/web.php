@@ -13,12 +13,12 @@ use \App\Http\Controllers\NewsController;
 |
 */
 Route::get('/',[NewsController::class,'mainmenu']);
-Route::any('/insert-form',[NewsController::class,'form']);
+Route::any('/insert-form',[NewsController::class,'showNewsForm']);
 Route::post("/store-form",[NewsController::class,'store']);
-Route::any('/edit',[NewsController::class,'edit']);
+Route::any('/edit',[NewsController::class,'showEditForm']);
 Route::post('/delete-news',[NewsController::class,'destroy']);
-Route::post('/edit-form',[NewsController::class,'showedit']);
-Route::get('/editform',[NewsController::class,'editnews']);
+Route::post('/edit-form',[NewsController::class,'searchNewsToEdit']);
+Route::get('/editform',[NewsController::class,'showEdit']);
 Route::post('/edit-news',[NewsController::class,'update']);
 
 
