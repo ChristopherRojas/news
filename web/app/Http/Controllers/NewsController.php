@@ -24,7 +24,7 @@ class NewsController extends Controller
         $q = $request->query('q');
 
         $url = url()->full();
-        if(str_contains($url,'?pageSize')){
+        if(str_contains($url,'pageSize')){
             if(str_contains($url,'&q')){
                 $query = News::query()->limit($pageSize);
                 foreach ($columns as $column) {
@@ -35,7 +35,7 @@ class NewsController extends Controller
                 $news = NewsController::pageSize($pageSize);
             }
         }
-        if(str_contains($url,'?page') and !str_contains($url,'?pageSize')){
+        if(str_contains($url,'page') and !str_contains($url,'pageSize')){
             $news = NewsController::page($page);
         }
         if(str_contains($url,'?q')) {
@@ -46,9 +46,6 @@ class NewsController extends Controller
             }
             $news = $query->get();
         }
-
-        //select * from news
-
         //Return the get request with code 200
         return response([
             'message' =>'Retrieved Successfully',
@@ -82,7 +79,7 @@ class NewsController extends Controller
         $news->description = $request->description;
         $news->content = $request->contentt;
         $news->url_image = $request->url_image;
-        $news->published_at = $request->published_at;
+        $news->published_at = date("Y-m-d h:i:sa", strtotime("now"));
         $news->save();
         NewsController::updatePage();
         return redirect('/insert-form')->with('status', 'News Post Form Data Has Been inserted');
@@ -168,7 +165,7 @@ class NewsController extends Controller
      * If the number of news is not indicated, it is left at 20
      *
      * @param int $n
-     * @return \Illuminate\Http\Response
+     * @return News
      */
     public static function pageSize($n)
     {
@@ -184,36 +181,20 @@ class NewsController extends Controller
      * Shows the page that has the id entered
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return News
      */
-    public static function page($id = 1)
+    public static function page($id)
     {
+
+        if($id == null){
+            $id = 1;
+        }
         //Select * from News n where n.id = $id
         $news = News::find($id);
         return $news;
     }
 
-    /**
-     * Search the news with the keyword.
-     *
-     * @param $keywords
-     * @return \Illuminate\Http\Response
-     */
-    public static function q($keywords = '')
-    {
-        //Select * from News where INSTR(*, $keywords) > 0
-        $columns = ['id','title','author','source','url','description','content'];
-        $query = News::query();
-        foreach($columns as $column){
-            $query->orWhere($column,'LIKE',"%{$keywords}%");
-        }
-        $news = $query->get();
 
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
-    }
     public function showNewsForm(){
         return view('NewsForm');
     }

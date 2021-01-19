@@ -46,10 +46,6 @@
                     <label for="exampleInputEmail1">Description</label>
                     <textarea id="description" name="description" class="form-control" required=""></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Published At</label>
-                    <input type="date" id="published_at" name="published_at" class="form-control" required="" max ="{{date("Y-m-d")}}">
-                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
