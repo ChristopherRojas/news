@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Type\Integer;
 
 class NewsController extends Controller
@@ -52,7 +53,8 @@ class NewsController extends Controller
         $news->url_image = $request->url_image;
         $news->published_at = $request->published_at;
         $news->save();
-        return redirect('/')->with('status', 'News Post Form Data Has Been inserted');
+        NewsController::updatePage();
+        return redirect('/insert-form')->with('status', 'News Post Form Data Has Been inserted');
     }
 
     /**
@@ -97,7 +99,8 @@ class NewsController extends Controller
         $news->url_image = $request->url_image;
         $news->published_at = $request->published_at;
         $news->save();
-        return redirect('/edit')->with('status', 'News Post Form Data Has Been Edit');
+        NewsController::updatePage();
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been Edited');
     }
 
     /**
@@ -109,10 +112,25 @@ class NewsController extends Controller
     public function destroy(Request $request)
     {
         News::destroy($request->id);
-        return redirect('/edit')->with('status', 'News Post Form Data Has Been deleted');
+        this::updatePage();
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been Deleted');
     }
 
-
+    public function updatePage(){
+        $count = 1;
+        $allNews = News::orderBy('published_at', 'DESC')->get();
+        foreach($allNews as $news){
+            $news->id = -$count;
+            $count++;
+            $news->save();
+        }
+        $count = 1;
+        foreach($allNews as $news){
+            $news->id = $count;
+            $count++;
+            $news->save();
+        }
+    }
     /**
      * Display a listing of n news
      * Were the max of display is 100
@@ -121,18 +139,10 @@ class NewsController extends Controller
      * @param int $n
      * @return \Illuminate\Http\Response
      */
-    public function pageSize($n)
+    public static function pageSize($n = 20)
     {
         //Select * from News Limit $n;
-        if (count(func_get_args() == 1))
-        {
-            $news = News::all()->limit($n);
-        }
-        //Select * from News Limit 20;
-        else{
-            $news = News::all()->limit(20);
-        }
-
+        $news = News::limit($n)->get();
         return response([
             'message' =>'Retrieved Successfully',
             'news'=> $news
@@ -145,11 +155,10 @@ class NewsController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function page($id)
+    public static function page($id)
     {
         //Select * from News n where n.id = $id
         $news = News::find($id);
-
         return response([
             'message' =>'Retrieved Successfully',
             'news'=> $news
@@ -187,5 +196,9 @@ class NewsController extends Controller
     }
     public function editnews(){
         return view('Edit');
+    }
+    public function mainmenu(){
+        NewsController::updatePage();
+        return view('welcome');
     }
 }

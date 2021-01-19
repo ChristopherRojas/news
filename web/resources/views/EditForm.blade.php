@@ -18,7 +18,7 @@
         <div class="card-body">
             @php
                 use App\Models\News;
-                $newss = News::all()
+                $newss = News::all();
             @endphp
             @forelse($newss as $news)
                 <div class = "card">
