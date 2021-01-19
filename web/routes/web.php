@@ -12,10 +12,10 @@ use \App\Http\Controllers\NewsController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/',[NewsController::class,'form']);
+Route::get('/',[NewsController::class,'mainmenu']);
+Route::any('/insert-form',[NewsController::class,'form']);
 Route::post("/store-form",[NewsController::class,'store']);
-Route::get('/edit',[NewsController::class,'edit']);
+Route::any('/edit',[NewsController::class,'edit']);
 Route::post('/delete-news',[NewsController::class,'destroy']);
 Route::post('/edit-form',[NewsController::class,'showedit']);
 Route::get('/editform',[NewsController::class,'editnews']);
