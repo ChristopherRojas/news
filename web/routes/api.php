@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //News routes
-Route::resource('news', \App\Http\Controllers\NewsController::class);
+Route::resource('news', NewsController::class);
+Route::get('news/pageSize',[NewsController::class,'pageSize']);
+Route::get('news/pageSize/{n?}',[NewsController::class,'pageSize']);
+
+
+Route::get('news/page/{id}', function ($id) {
+    return NewsController::page($id);
+});
+Route::get('news/page/', function () {
+    return NewsController::page(1);
+});
