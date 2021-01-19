@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent;
 use Ramsey\Uuid\Type\Integer;
+use Illuminate\Support\Facades\URL;
 
 class NewsController extends Controller
 {
@@ -14,10 +15,40 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //select * from news
         $news = News::all();
+        $columns = ['id', 'title', 'author', 'source', 'url', 'description', 'content'];
+        $pageSize = $request->query('pageSize', 20);
+        $page = $request->query('page', 1);
+        $q = $request->query('q');
+
+        $url = url()->full();
+        if(str_contains($url,'?pageSize')){
+            if(str_contains($url,'&q')){
+                $query = News::query()->limit($pageSize);
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'LIKE', "%{$q}%");
+                }
+                $news = $query->get();
+            }else{
+                $news = NewsController::pageSize($pageSize);
+            }
+        }
+        if(str_contains($url,'?page') and !str_contains($url,'?pageSize')){
+            $news = NewsController::page($page);
+        }
+        if(str_contains($url,'?q')) {
+            $query = News::query();
+            $columns = ['id', 'title', 'author', 'source', 'url', 'description', 'content'];
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'LIKE', "%{$q}%");
+            }
+            $news = $query->get();
+        }
+
+        //select * from news
+
         //Return the get request with code 200
         return response([
             'message' =>'Retrieved Successfully',
@@ -139,14 +170,14 @@ class NewsController extends Controller
      * @param int $n
      * @return \Illuminate\Http\Response
      */
-    public static function pageSize($n = 20)
+    public static function pageSize($n)
     {
+        if($n == null){
+            $n = 20;
+        }
         //Select * from News Limit $n;
         $news = News::limit($n)->get();
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
+        return $news;
     }
 
     /**
@@ -159,10 +190,7 @@ class NewsController extends Controller
     {
         //Select * from News n where n.id = $id
         $news = News::find($id);
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
+        return $news;
     }
 
     /**

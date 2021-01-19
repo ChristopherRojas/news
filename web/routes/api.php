@@ -20,11 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //News routes
-Route::resource('news', NewsController::class);
-Route::get('news/{f}/{p?}', function ($f,$p){
+//Route::resource('news', NewsController::class);
+/*Route::get('news?{f}={p?}', function ($f,$p){
     if($f == "pageSize"){
         return NewsController::pageSize($p);
-
     }
     if($f == 'page'){
         return NewsController::page($p);
@@ -33,6 +32,6 @@ Route::get('news/{f}/{p?}', function ($f,$p){
         return NewsController::q($p);
     }
 
-
-});
+});*/
+Route::get('news',[NewsController::class,'index']);
 
