@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at','updated_at'];
 }

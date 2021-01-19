@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent;
 use Ramsey\Uuid\Type\Integer;
+use Illuminate\Support\Facades\URL;
 
 class NewsController extends Controller
 {
@@ -13,10 +15,37 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //select * from news
         $news = News::all();
+        $columns = ['id', 'title', 'author', 'source', 'url', 'description', 'content'];
+        $pageSize = $request->query('pageSize', 20);
+        $page = $request->query('page', 1);
+        $q = $request->query('q');
+
+        $url = url()->full();
+        if(str_contains($url,'pageSize')){
+            if(str_contains($url,'&q')){
+                $query = News::query()->limit($pageSize);
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'LIKE', "%{$q}%");
+                }
+                $news = $query->get();
+            }else{
+                $news = NewsController::pageSize($pageSize);
+            }
+        }
+        if(str_contains($url,'page') and !str_contains($url,'pageSize')){
+            $news = NewsController::page($page);
+        }
+        if(str_contains($url,'?q')) {
+            $query = News::query();
+            $columns = ['id', 'title', 'author', 'source', 'url', 'description', 'content'];
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'LIKE', "%{$q}%");
+            }
+            $news = $query->get();
+        }
         //Return the get request with code 200
         return response([
             'message' =>'Retrieved Successfully',
@@ -50,9 +79,10 @@ class NewsController extends Controller
         $news->description = $request->description;
         $news->content = $request->contentt;
         $news->url_image = $request->url_image;
-        $news->published_at = $request->published_at;
+        $news->published_at = date("Y-m-d h:i:sa", strtotime("now"));
         $news->save();
-        return redirect('/')->with('status', 'News Post Form Data Has Been inserted');
+        NewsController::updatePage();
+        return redirect('/insert-form')->with('status', 'News Post Form Data Has Been inserted');
     }
 
     /**
@@ -72,7 +102,7 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function showEditForm()
     {
         return view("EditForm");
 
@@ -97,7 +127,8 @@ class NewsController extends Controller
         $news->url_image = $request->url_image;
         $news->published_at = $request->published_at;
         $news->save();
-        return redirect('/edit')->with('status', 'News Post Form Data Has Been Edit');
+        NewsController::updatePage();
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been Edited');
     }
 
     /**
@@ -109,83 +140,74 @@ class NewsController extends Controller
     public function destroy(Request $request)
     {
         News::destroy($request->id);
-        return redirect('/edit')->with('status', 'News Post Form Data Has Been deleted');
+        NewsController::updatePage();
+        return redirect('/edit')->with('status', 'News Post Form Data Has Been Deleted');
     }
 
-
+    public function updatePage(){
+        $count = 1;
+        $allNews = News::orderBy('published_at', 'DESC')->get();
+        foreach($allNews as $news){
+            $news->id = -$count;
+            $count++;
+            $news->save();
+        }
+        $count = 1;
+        foreach($allNews as $news){
+            $news->id = $count;
+            $count++;
+            $news->save();
+        }
+    }
     /**
      * Display a listing of n news
      * Were the max of display is 100
      * If the number of news is not indicated, it is left at 20
      *
      * @param int $n
-     * @return \Illuminate\Http\Response
+     * @return News
      */
-    public function pageSize($n)
+    public static function pageSize($n)
     {
+        if($n == null){
+            $n = 20;
+        }
         //Select * from News Limit $n;
-        if (count(func_get_args() == 1))
-        {
-            $news = News::all()->limit($n);
-        }
-        //Select * from News Limit 20;
-        else{
-            $news = News::all()->limit(20);
-        }
-
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
+        $news = News::limit($n)->get();
+        return $news;
     }
 
     /**
      * Shows the page that has the id entered
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return News
      */
-    public function page($id)
+    public static function page($id)
     {
+
+        if($id == null){
+            $id = 1;
+        }
         //Select * from News n where n.id = $id
         $news = News::find($id);
-
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
+        return $news;
     }
 
-    /**
-     * Search the news with the keyword.
-     *
-     * @param $keywords
-     * @return \Illuminate\Http\Response
-     */
-    public function q($keywords)
-    {
-        //Select * from News where INSTR(*, $keywords) > 0
-        $columns = ['id','title','author','source','url','description','content'];
-        $query = News::query();
-        foreach($columns as $column){
-            $query->orWhere($column,'LIKE',"%{$keywords}%");
-        }
-        $news = $query->get();
 
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
-    }
-    public function form(){
+    public function showNewsForm(){
         return view('NewsForm');
     }
 
-    public function showedit(Request $request){
+    public function searchNewsToEdit(Request $request){
         $news = News::find($request->id);
         return redirect('/editform')->with('news', $news);
     }
-    public function editnews(){
+    public function showEdit(){
         return view('Edit');
+    }
+    public function mainmenu(){
+        NewsController::updatePage();
+        return view('welcome');
     }
 }

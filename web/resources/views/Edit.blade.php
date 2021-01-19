@@ -7,51 +7,47 @@
 <body>
 <div class="container mt-4">
     @if(session('status'))
-        <div class="alert alert-success">
+        <div class="alert alert-success" style="background: #009688; color:white">
             {{ session('status') }}
         </div>
     @endif
     <div class="card">
-        <div class="card-header text-center font-weight-bold">
+        <div class="card-header text-center font-weight-bold" style="background: #009688; color: white">
             MyNews - The Best API for News
         </div>
-        <div class="card-body">
+        <div class="card-body" style="background: #4DB6AC">
             <form name="edit-blog-post-form" id="edit-blog-post-form" method="post" action="{{url('edit-news')}}">
                 @csrf
                 <input type="hidden" id="id" name="id" class="form-control" value="{{session('news')->id}}">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Title</label>
-                    <input type="text" id="title" name="title" class="form-control" value="{{session('news')->title}}" required="" minlength="2">
+                    <label for="exampleInputEmail1"><b>Title</b></label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{session('news')->title}}" required="" minlength="2" style="background: #B2DFDB">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Author</label>
-                    <input type="text" id="author" name="author" class="form-control" value="{{session('news')->author}}" required="" minlength="2">
+                    <label for="exampleInputEmail1"><b>Author</b></label>
+                    <input type="text" id="author" name="author" class="form-control" value="{{session('news')->author}}" required="" minlength="2" style="background: #B2DFDB">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Source</label>
-                    <input type="text" id="source" name="source" class="form-control" value="{{session('news')->source}}" required="" minlength="2">
+                    <label for="exampleInputEmail1"><b>Source</b></label>
+                    <input type="text" id="source" name="source" class="form-control" value="{{session('news')->source}}" required="" minlength="2" style="background: #B2DFDB">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">URL</label>
-                    <input type="url" id="url" name="url" class="form-control" value="{{session('news')->url}}">
+                    <label for="exampleInputEmail1"><b>URL</b></label>
+                    <input type="url" id="url" name="url" class="form-control" value="{{session('news')->url}}" style="background: #B2DFDB">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Image URL</label>
-                    <input type="url" id="url_image" name="url_image" class="form-control" value="{{session('news')->url_image}}">
+                    <label for="exampleInputEmail1"><b>Image URL</b></label>
+                    <input type="url" id="url_image" name="url_image" class="form-control" value="{{session('news')->url_image}}" style="background: #B2DFDB">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Content</label>
-                    <textarea id="contentt" name="contentt" class="form-control" required="">{{session('news')->content}}</textarea>
+                    <label for="exampleInputEmail1"><b>Content</b></label>
+                    <textarea id="contentt" name="contentt" class="form-control" required="" style="background: #B2DFDB">{{session('news')->content}}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Description</label>
-                    <textarea id="description" name="description" class="form-control" required="">{{session('news')->description}}</textarea>
+                    <label for="exampleInputEmail1"><b>Description</b></label>
+                    <textarea id="description" name="description" class="form-control" required="" style="background: #B2DFDB">{{session('news')->description}}</textarea>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Published At</label>
-                    <input type="date" id="published_at" name="published_at" class="form-control" value="{{session('news')->published_at}}"required="" max ="{{date("Y-m-d")}}">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" style="background: #009688">Submit</button>
             </form>
         </div>
     </div>
