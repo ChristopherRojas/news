@@ -37,6 +37,7 @@ import java.util.List;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
 import cl.ucn.disc.dsm.crojas.news.utils.Validation;
+import retrofit2.Call;
 
 /**
  * The faker implementation of {@link Contracts}.
@@ -121,4 +122,6 @@ public class ContractsImplFaker implements Contracts {
         //Add news
         this.theNews.add(news);
     }
+
+
 }

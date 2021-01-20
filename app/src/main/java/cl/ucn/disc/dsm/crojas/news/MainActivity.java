@@ -28,6 +28,8 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -38,6 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.kwabenaberko.newsapilib.network.APIService;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ModelAdapter;
 
@@ -48,9 +51,16 @@ import java.util.List;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
 import cl.ucn.disc.dsm.crojas.news.model.NewsItem;
+import cl.ucn.disc.dsm.crojas.news.services.ApiServices;
 import cl.ucn.disc.dsm.crojas.news.services.Contracts;
 import cl.ucn.disc.dsm.crojas.news.services.ContractsImplNewsApi;
+//import cl.ucn.disc.dsm.crojas.news.services.NewsApiKey;
 import cl.ucn.disc.dsm.crojas.news.services.NewsApiKey;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * The Main Class
@@ -80,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
     SwitchCompat switchCompat;
     SharedPreferences sharedPreferences = null;
 
+
+    //Conexión de la APIRest con Android Studio
+    List<News> NewsList;
+    Retrofit cliente;
+    ApiServices apiService;
+
+
     /**
      * OnCreate.
      *
@@ -93,6 +110,29 @@ public class MainActivity extends AppCompatActivity {
 
         //Switch Night Mode Theme
         switchCompat = findViewById(R.id.switchCompat);
+
+        //Conexión de la APIRest con Android Studio
+        cliente= new Retrofit.Builder().baseUrl(ApiServices.URL).addConverterFactory(GsonConverterFactory.create()).build();
+        apiService=cliente.create(ApiServices.class);
+        apiService.NewsList().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                Log.i("Cliente","Cliente Android");
+                if (response.isSuccessful()){
+                    NewsList=response.body();
+                    for (News news:NewsList){
+                        Log.i("News: ",news.toString());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                Log.i("Error",t.getMessage());
+
+            }
+        });
+        //NewsList deberían ser las noticias de APIRest en Laravel
+
 
         //Saving state of our app
         sharedPreferences = getSharedPreferences("night", 0);
@@ -152,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
 
             // Using the contracts
             //TODO:APiKEy Ocult
-            Contracts contracts = new ContractsImplNewsApi(NewsApiKey.getTheApiKey());
+            Contracts contracts = new ContractsImplNewsApi(NewsApiKey.getApiKey());
 
-            // Get the news
+            //Get the news
             List<News> listNews = contracts.retrieveNews(30);
 
             // Set the adapter

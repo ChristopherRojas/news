@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020. Christopher Rojas-Garri, christopher.rojas@alumnos.ucn.cl
+ * Copyright (c) 2021. Christopher Rojas-Garri, christopher.rojas@alumnos.ucn.cl
+ * Copyright (c) 2021. Camilo Barrera-Arancibia,camilo.barrera@alumnos.ucn.cl
+ * Copyright (c) 2021. Marcelo Lam-Biagguini,marcelo.lam@alumnos.ucn.cl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
@@ -9,31 +11,16 @@
  */
 
 package cl.ucn.disc.dsm.crojas.news.services;
+
 import java.util.List;
+
 import cl.ucn.disc.dsm.crojas.news.model.News;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
-/**
- * The Contracts from CU/UH.
- * @author Christopher Rojas-Garri
- */
-public interface Contracts {
-
-
-
-    /**
-     * Get the list of News.
-     * @param size  size of the list.
-     * @return the List of News.
-     */
-    List<News> retrieveNews(Integer size);
-
-    /**
-     * Save one News into the System.
-     *
-     * @param news to save.
-     */
-    void saveNews(News news);
+public interface ApiServices {
+    //Conexión de la APIRest con Android Studio
+    public static final String URL="http://127.0.0.1:8000/";
+    @GET("api/news")
+    Call<List<News>> NewsList();
 }
