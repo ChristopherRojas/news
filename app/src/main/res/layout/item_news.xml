@@ -19,14 +19,15 @@
     <!-- Image News -->
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/my_image_view"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
         android:paddingStart="2dp"
         android:paddingTop="2dp"
-        android:paddingEnd="2dp"
-        android:layout_margin="5dp"
+        android:paddingEnd="4dp"
+        android:layout_margin="3dp"
         android:scaleType="centerCrop"
         fresco:placeholderImage="@drawable/ic_image_notfound"
+        fresco:roundedCornerRadius="5dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,15 +42,15 @@
                 android:id="@+id/in_tv_autor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
+                android:layout_weight="0.1"
                 android:text="Author"
                 android:textColor="@color/textColor"/>
 
             <TextView
                 android:id="@+id/in_tv_source"
-                android:layout_width="wrap_content"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
+                android:layout_weight="1"
                 android:textColor="@color/textColor"
                 android:paddingStart="5dp"
                 android:text="source"
@@ -57,9 +58,9 @@
 
             <TextView
                 android:id="@+id/in_tv_published_at"
-                android:layout_width="wrap_content"
+                android:layout_width="215dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:textColor="@color/textColor"
                 android:paddingEnd="3dp"
                 android:text="2020.nov.21"
@@ -77,7 +78,7 @@
         <TextView
             android:id="@+id/in_tv_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textColor="@color/textColor"
             android:text="The Description" />
 
