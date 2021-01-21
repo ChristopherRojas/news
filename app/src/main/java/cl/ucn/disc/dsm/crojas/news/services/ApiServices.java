@@ -18,8 +18,13 @@ import cl.ucn.disc.dsm.crojas.news.model.News;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
+/**
+ * Conexion interface Api service
+ * @author Christopher Rojas - Camilo Barrera
+ */
 public interface ApiServices {
-    //Conexión de la APIRest con Android Studio
+
+    //Url APIRest with Android Studio
     public static final String URL="http://127.0.0.1:8000/";
     @GET("api/news")
     Call<List<News>> NewsList();
