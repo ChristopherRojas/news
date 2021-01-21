@@ -24,7 +24,7 @@
             android:textColor="@color/textColor"
             app:contentInsetEnd="8dp"
             app:contentInsetStart="10dp"
-            app:navigationIcon="@drawable/ic_launcher_foreground"
+            app:navigationIcon="@mipmap/ic_imglogo"
             app:subtitle="@string/subtitle"
             app:title="@string/app_name"
             app:titleTextColor="@color/textColor"
@@ -60,9 +60,9 @@
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/am_rv_news"
-            android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
             android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
