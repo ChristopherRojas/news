@@ -41,6 +41,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.kwabenaberko.newsapilib.network.APIService;
+import com.mifmif.common.regex.Main;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ModelAdapter;
 
@@ -90,10 +91,20 @@ public class MainActivity extends AppCompatActivity {
     SwitchCompat switchCompat;
     SharedPreferences sharedPreferences = null;
 
+    /**
+     * List to news of APIRest
+     */
 
-    //Conexión de la APIRest con Android Studio
     List<News> NewsList;
+
+    /**
+     * Retrofit Initialization
+     */
     Retrofit cliente;
+
+    /**
+     * APIRest call and URL
+     */
     ApiServices apiService;
 
 
@@ -111,28 +122,25 @@ public class MainActivity extends AppCompatActivity {
         //Switch Night Mode Theme
         switchCompat = findViewById(R.id.switchCompat);
 
-        //Conexión de la APIRest con Android Studio
+        //Logger
+        Logger log = LoggerFactory.getLogger(MainActivity.class);
+
+        //Connection to APIRest created on Laravel
         cliente= new Retrofit.Builder().baseUrl(ApiServices.URL).addConverterFactory(GsonConverterFactory.create()).build();
         apiService=cliente.create(ApiServices.class);
         apiService.NewsList().enqueue(new Callback<List<News>>() {
             @Override
             public void onResponse(Call<List<News>> call, Response<List<News>> response) {
-                Log.i("Cliente","Cliente Android");
                 if (response.isSuccessful()){
                     NewsList=response.body();
-                    for (News news:NewsList){
-                        Log.i("News: ",news.toString());
-                    }
                 }
             }
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
-                Log.i("Error",t.getMessage());
+                log.warn("Error: ",t.getMessage());
 
             }
         });
-        //NewsList deberían ser las noticias de APIRest en Laravel
-
 
         //Saving state of our app
         sharedPreferences = getSharedPreferences("night", 0);
@@ -162,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("night_mode", false);
                     editor.commit();
-
                 }
             }
         });

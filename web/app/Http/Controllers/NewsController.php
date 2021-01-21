@@ -13,6 +13,10 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * ?pageSize(n): Returns n news
+     * ?page(id): Return the news with same id
+     * ?q(keywords): Returns the news with the keywords on any columns
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -46,25 +50,15 @@ class NewsController extends Controller
             }
             $news = $query->get();
         }
-        //Return the get request with code 200
+        //Return the get request
         return response()->json($news);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return redirect to insert-form with a status
      */
     public function store(Request $request)
     {
@@ -75,29 +69,18 @@ class NewsController extends Controller
         $news->url = $request->url;
         $news->description = $request->description;
         $news->content = $request->contentt;
-        $news->url_image = $request->url_image;
-        $news->published_at = date("Y-m-d h:i:sa", strtotime("now"));
+        $news->urlImage = $request->url_image;
+        $news->publishedAt = date("Y-m-d h:i:sa", strtotime("now"));
         $news->save();
         NewsController::updatePage();
         return redirect('/insert-form')->with('status', 'News Post Form Data Has Been inserted');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return view with the news to edit
      */
     public function showEditForm()
     {
@@ -109,8 +92,7 @@ class NewsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return redirect to insert-form with a status
      */
     public function update(Request $request)
     {
@@ -121,8 +103,8 @@ class NewsController extends Controller
         $news->url = $request->url;
         $news->description = $request->description;
         $news->content = $request->contentt;
-        $news->url_image = $request->url_image;
-        $news->published_at = $request->published_at;
+        $news->urlImage = $request->url_image;
+        $news->publishedAt = $request->published_at;
         $news->save();
         NewsController::updatePage();
         return redirect('/edit')->with('status', 'News Post Form Data Has Been Edited');
@@ -131,8 +113,8 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request  $request
+     * @return redirect to edit with status
      */
     public function destroy(Request $request)
     {
@@ -141,9 +123,12 @@ class NewsController extends Controller
         return redirect('/edit')->with('status', 'News Post Form Data Has Been Deleted');
     }
 
+    /**
+     * Update the news by publishedAt in the database
+     */
     public function updatePage(){
         $count = 1;
-        $allNews = News::orderBy('published_at', 'DESC')->get();
+        $allNews = News::orderBy('publishedAt', 'DESC')->get();
         foreach($allNews as $news){
             $news->id = -$count;
             $count++;
@@ -169,6 +154,7 @@ class NewsController extends Controller
         if($n == null){
             $n = 20;
         }
+
         //Select * from News Limit $n;
         $news = News::limit($n)->get();
         return $news;
@@ -182,27 +168,49 @@ class NewsController extends Controller
      */
     public static function page($id)
     {
-
         if($id == null){
             $id = 1;
         }
+
         //Select * from News n where n.id = $id
         $news = News::find($id);
         return $news;
     }
 
-
+    /**
+     * Show NewsForm (To insert news)
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showNewsForm(){
         return view('NewsForm');
     }
 
+    /**
+     * Search a news to edit and redirect with the news
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function searchNewsToEdit(Request $request){
         $news = News::find($request->id);
         return redirect('/editform')->with('news', $news);
     }
+
+    /**
+     * Show Edit page
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showEdit(){
         return view('Edit');
     }
+
+    /**
+     * Show the main menu
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function mainmenu(){
         NewsController::updatePage();
         return view('welcome');

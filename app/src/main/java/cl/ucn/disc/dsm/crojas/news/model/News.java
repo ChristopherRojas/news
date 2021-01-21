@@ -190,10 +190,14 @@ public final class News {
         return publishedAt;
     }
 
-    //TODO:remove testing
+    /**
+     * Convert news to string
+     *
+     * @return The news in a string
+     */
     @NonNull
     @Override
     public String toString() {
-        return this.title;
+        return this.title+" "+this.author+" "+this.source+" "+this.url+" "+this.urlImage+" "+this.content+" "+this.description+" "+this.publishedAt;
     }
 }
