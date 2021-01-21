@@ -19,13 +19,13 @@ Project created with the purpose of learn how to create a android app, using an 
 and practice our codding skills.
 
 ## Screenshots
-![Screenshot](./image/TheNewsImg.jpg)
+![Screenshot](./image/DayMode.jpg)
+
 
 ## Features
 Night Mode 🌗
 
-![Nightmode](./image/xxx.png)
-![Nightmode](./image/xxx.png)
+![Nightmode](./image/NightMode.png)
 
 ## Technologies
 -JAVA 8<br>
@@ -37,4 +37,4 @@ Night Mode 🌗
 Project is: _in progress_.
 
 ## Contact
-Created by [@ChristopherRojas](https://github.com/ChristopherRojas) - feel free to contact me!
+Created by [@ChristopherRojas](https://github.com/ChristopherRojas) and [@KamiloBarrera](https://github.com/KamiloBarrera) - feel free to contact me!
