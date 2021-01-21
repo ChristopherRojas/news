@@ -14,6 +14,8 @@
         android:layout_height="wrap_content">
 
         <!-- Toolbar -->
+
+        <!-- SwitchCompatButtonMode -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/am_t_toolbar"
             android:layout_width="match_parent"
@@ -26,31 +28,35 @@
             app:contentInsetStart="10dp"
             app:navigationIcon="@mipmap/ic_imglogo"
             app:subtitle="@string/subtitle"
+            app:subtitleTextColor="@color/textColor"
             app:title="@string/app_name"
             app:titleTextColor="@color/textColor"
-            app:subtitleTextColor="@color/textColor"
             tools:targetApi="lollipop" />
 
-        <!-- SwitchCompatButtonMode -->
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switchCompat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:background="@color/colorPrimaryDark"
-            android:checked="false"
-            android:padding="10dp"
-            android:text="@string/text"
-            android:textAlignment="textEnd"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            app:switchPadding="20dp">
 
-        </androidx.appcompat.widget.SwitchCompat>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchCompat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimaryDark"
+        android:checked="false"
+        android:padding="10dp"
+        android:text="@string/text"
+        android:textAlignment="textEnd"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="15dp"
+        android:paddingEnd="2dp"
+        android:textStyle="bold"
+        app:switchPadding="20dp">
+
+    </androidx.appcompat.widget.SwitchCompat>
+
+
 
     <!-- SwipeRefreshLayout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

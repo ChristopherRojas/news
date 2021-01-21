@@ -18,21 +18,14 @@ import cl.ucn.disc.dsm.crojas.news.model.News;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
+
 /**
-<<<<<<< HEAD
- * The Connection to APIRest created on Laravel.
- * @author Camilo Barrera A.
- */
-public interface ApiServices {
-    //Base URL to service
-=======
  * Conexion interface Api service
  * @author Christopher Rojas - Camilo Barrera
  */
 public interface ApiServices {
 
     //Url APIRest with Android Studio
->>>>>>> ff81153be3c084eefb1db497c5c36d9fb7b51e32
     public static final String URL="http://127.0.0.1:8000/";
 
     //Call to service

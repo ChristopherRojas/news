@@ -21,8 +21,6 @@ import retrofit2.http.Query;
  */
 public interface Contracts {
 
-
-
     /**
      * Get the list of News.
      * @param size  size of the list.

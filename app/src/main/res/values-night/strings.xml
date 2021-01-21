@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">The News</string>
     <string name="title">Title</string>
-    <string name="subtitle">Portal News</string>
+    <string name="subtitle">Portal Breaking News</string>
     <string name="text">Mode Night</string>
 
 </resources>
