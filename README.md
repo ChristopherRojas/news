@@ -4,7 +4,7 @@ The News Android App Developed in DSM-2-2020
 Assignament for Desarrollo de Soluciones Móviles. 
 
 # The-News
-> News App using newsApi
+> News App using newsApi & Api Rest built
 
 ## Table of contents
 * [General info](#general-info)
