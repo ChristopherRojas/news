@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 
 import cl.ucn.disc.dsm.crojas.news.model.News;
 import cl.ucn.disc.dsm.crojas.news.utils.Validation;
+import retrofit2.Call;
 
 /**
  * The NewsApi Implementation of contracts.
@@ -173,4 +174,5 @@ public final class ContractsImplNewsApi implements Contracts {
     public void saveNews(News news) {
         throw new NotImplementedException("Can't save news in NewsAPI !");
     }
+
 }

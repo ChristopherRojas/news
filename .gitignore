@@ -26,6 +26,10 @@
 /.idea/jarRepositories.xml
 /.idea/compiler.xml
 
+#ApiKey
+/app/src/main/java/cl/ucn/disc/dsm/crojas/news/services/NewsApiKey.java
+
+
 #Trashy
 .DS_Store
 /build

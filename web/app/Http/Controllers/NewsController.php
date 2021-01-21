@@ -47,10 +47,7 @@ class NewsController extends Controller
             $news = $query->get();
         }
         //Return the get request with code 200
-        return response([
-            'message' =>'Retrieved Successfully',
-            'news'=> $news
-        ], status:200) ;
+        return response()->json($news);
     }
 
     /**
